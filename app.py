@@ -27,6 +27,7 @@ from dash import Dash, html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 import numpy as np
 import pandas as pd
+import os
 from datetime import datetime as dt
 
 from src.insights import get_overall_insights
@@ -304,6 +305,7 @@ def update_figures(n_clicks, ir_levels, selected_countries, selected_projection)
     return sankey_figure, choropleth_figure
 
 
-# Run the server
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    port = int(os.environ.get("PORT", 8050))
+    app.run_server(host="0.0.0.0", port=port)
+    # app.run_server(debug=True)
