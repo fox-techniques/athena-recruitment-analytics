@@ -3,36 +3,42 @@ name: Deploy Dash App to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change to your default branch if not 'main'
+      - main  # Adjust based on your default branch
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Check out the code
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    # Step 2: Set up Python
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'  # Use the Python version your app requires
+      # Step 2: Set up Docker
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
 
-    # Step 3: Install dependencies
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      # Step 3: Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t dash-app .
 
-    # Step 4: Start Dash App with Gunicorn
-    - name: Start Gunicorn Server
-      run: |
-        gunicorn --bind 0.0.0.0:8050 app:server &
-      continue-on-error: true
+      # Step 4: Run the Docker container
+      - name: Run Dash App container
+        run: |
+          docker run -d -p 8050:8050 --name dash-container dash-app
 
-    # Step 5: Test if the app is running (optional)
-    - name: Verify App is Running
-      run: |
-        curl --fail http://localhost:8050 || echo "Failed to start app"
+      # Step 5: Generate static HTML snapshot
+      - name: Generate static snapshot
+        run: |
+          pip install dash-snapshots requests
+          dash-snapshots capture http://localhost:8050 ./build
+
+      # Step 6: Publish to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
