@@ -1,0 +1,14 @@
+{
+    "S": "Submitted",
+    "N": "No Reply",
+    "H": "Hold",
+    "C": "Call",
+    "V": "Via Recruiters",
+    "I": "Interview",
+    "T": "Test",
+    "A": "Assignment",
+    "O": "Offer",
+    "F": "Followed-up",
+    "G": "Ghosted",
+    "R": "Rejected"
+}

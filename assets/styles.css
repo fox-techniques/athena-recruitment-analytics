@@ -1,0 +1,150 @@
+/* General styling */
+body {
+    background-color: #14213d;
+    color: #e5e5e5;
+    font-family: 'Fira Sans', sans-serif; 
+    min-height: 100vh;
+}
+
+/* Logo styling */
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px; /* Add padding around the logo */
+    width: 90px;   /* Shrink the logo */
+    height: 90px;  /* Shrink the height */
+}
+
+/* Title styling */
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 32px;
+    font-weight: bold; /* Optional: Makes the title bold */
+    color: #fca311; /* Optional: Sets the color for the title */
+}
+
+/* Sub-Title styling */
+.subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: center;
+    margin-top: 5px;
+    font-size: 20px;
+    color: #C05420; /* Optional: Sets the color for the subtitle */
+}
+
+/* Logo container styling */
+.logo-container {
+    color: #8a4b03;
+    margin-bottom: 30px;
+}
+
+/* Logo container styling */
+.filter-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* Tab styling */
+.dash-tabs .tab {
+    border-radius: 0px;
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+    background-color: #0C0C0C;
+    color: white;
+    border: 2px solid #0C0C0C; 
+    border-bottom: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-tabs .tab:hover {
+    text-decoration: none;
+    background-color: #0C0C0C; 
+    color: gold;
+    border: 2px solid #0C0C0C;  
+    border-top: 2px solid gold;
+}
+
+.dash-tabs .tab--selected {
+    text-decoration: none;
+    background-color: #0C0C0C; 
+    color: gold;
+    border: 2px solid #0C0C0C;;  
+    border-top: 2px solid gold;
+}
+
+/* Description card */
+.desc-title {
+    color: #fca311;
+}
+
+/* Card styles */
+.card {
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;;
+    background-color: white;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+}
+
+.graph-card {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: white; /* White background for graph cards */
+    border-radius: 10px;     /* Rounded corners */
+    border: none;            /* No border */
+    text-align: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+}
+
+.card-value {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Card image styling */
+.card-img {
+    width: 50px; /* Set image width */
+    height: auto; /* Maintain aspect ratio */
+    align-self: center; /* Center the image */
+    margin-bottom: 10px; /* Add some spacing below the image */
+}
+
+/* Graph container styling */
+.graph-container {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Spinner style */
+.loading-spinner {
+    margin-top: 20px;
+}
+
+/* Main container styling */
+.main-container {
+    padding: 0px;
+}
