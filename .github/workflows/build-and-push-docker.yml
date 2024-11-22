@@ -1,0 +1,40 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"          
+      - "v[0-9]+.[0-9]+.[0-9]+-alpha.[0-9]+" 
+      - "v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+"  
+      - "v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+"     
+    paths-ignore:  
+      - 'data/**'
+
+jobs:
+  build-and-push:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    environment: release-with-approval
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Log in to GitHub Packages
+      - name: Log in to GitHub Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 3: Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/dash-app:latest .
+
+      # Step 4: Push Docker image to GitHub Packages
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/dash-app:latest
