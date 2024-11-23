@@ -77,7 +77,7 @@ df = add_industry_and_field(parsed_df, company_industry_mapping, position_field_
 app = Dash(
     __name__,
     external_stylesheets=[dbc.themes.BOOTSTRAP, "./assets/styles.css"],
-    title="Athena Jobhunt Analytics",
+    title="Athena: Recruitment Analytics",
 )
 
 server = app.server
