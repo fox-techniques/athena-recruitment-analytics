@@ -75,7 +75,11 @@ df = add_industry_and_field(parsed_df, company_industry_mapping, position_field_
 # Initialize the app
 app = Dash(
     __name__,
-    external_stylesheets=[dbc.themes.BOOTSTRAP, "./assets/styles.css"],
+    external_stylesheets=[
+        dbc.themes.BOOTSTRAP,
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
+        "./assets/styles.css",
+    ],
     title="Athena: Recruitment Analytics",
 )
 
@@ -105,157 +109,208 @@ fig_industries, fig_fields, fig_choropleth, fig_irene_sankey = overview_visualiz
 )
 
 # Define the layout of the app
-app.layout = dbc.Container(
-    id="app-container",
-    children=[
-        # Header with title and logo
-        dbc.Row(
-            [
-                dbc.Col(
-                    html.Img(
-                        src="./assets/icons/jobhunt-logo.png",
-                        className="logo",
-                    ),
-                    width="auto",
-                ),
-                dbc.Col(
+app.layout = html.Div(
+    [
+        dbc.Container(
+            id="app-container",
+            children=[
+                # Header with title and logo
+                dbc.Row(
                     [
-                        html.H1(
-                            "ATHENA - PEOPLE AND RECRUITMENT ANALYTICS",
-                            className="title",
-                            style={"margin-bottom": "0", "font-size": "2rem"},
-                        ),
-                        html.H2(
-                            "FOX TECHNIQUES",
-                            className="subtitle",
-                            style={"margin-top": "0", "font-size": "1.2rem"},
-                        ),
-                    ],
-                    style={
-                        "display": "flex",
-                        "flex-direction": "column",
-                        "justify-content": "center",
-                    },
-                ),
-            ],
-            align="center",
-            className="mb-4",
-        ),
-        # Content: Left column for controls, right column for visualizations
-        dbc.Row(
-            [
-                dbc.Col(
-                    [
-                        description_card(),
-                        html.Div(
-                            ["initial child"],
-                            id="output-clientside",
-                            style={"display": "none"},
-                        ),
-                        generate_control_card(processed_data_df),
-                    ],
-                    width=3,
-                    id="left-column",
-                ),
-                dbc.Col(
-                    [
-                        # Stats Cards
-                        dbc.Card(
-                            dbc.Row(
-                                [
-                                    dbc.Col(
-                                        generate_stats_card(
-                                            "Applications",
-                                            num_of_applications,
-                                            "./assets/icons/job-application-icon.png",
-                                        ),
-                                        width=2,
-                                    ),
-                                    dbc.Col(
-                                        generate_stats_card(
-                                            "Countries",
-                                            num_of_countries,
-                                            "./assets/icons/country-icon.png",
-                                        ),
-                                        width=2,
-                                    ),
-                                    dbc.Col(
-                                        generate_stats_card(
-                                            "Industries",
-                                            num_of_industries,
-                                            "./assets/icons/job-sector-icon.png",
-                                        ),
-                                        width=2,
-                                    ),
-                                    dbc.Col(
-                                        generate_stats_card(
-                                            "Backgrounds",
-                                            num_of_fields,
-                                            "./assets/icons/job-area-icon.png",
-                                        ),
-                                        width=2,
-                                    ),
-                                    dbc.Col(
-                                        generate_stats_card(
-                                            "Active",
-                                            num_of_active,
-                                            "./assets/icons/job-active-icon.png",
-                                        ),
-                                        width=2,
-                                    ),
-                                    dbc.Col(
-                                        generate_stats_card(
-                                            "Interviews",
-                                            num_of_interviews,
-                                            "./assets/icons/job-interview-icon.png",
-                                        ),
-                                        width=2,
-                                    ),
-                                ],
+                        dbc.Col(
+                            html.Img(
+                                src="./assets/icons/jobhunt-logo.png",
+                                className="logo",
                             ),
-                            id="stats_card",
-                            className="card mb-4",
+                            width="auto",
                         ),
-                        # Graph Visualizations
-                        dbc.Card(
+                        dbc.Col(
                             [
-                                dbc.Row(
-                                    dbc.Col(
-                                        dcc.Graph(
-                                            figure=fig_irene_sankey, id="sankey-graph"
-                                        ),
-                                        className="graph-container",
-                                    )
+                                html.H1(
+                                    "ATHENA",
+                                    className="title",
+                                    style={"margin-bottom": "0", "font-size": "3rem"},
                                 ),
-                                dbc.Row(
-                                    dbc.Col(
-                                        dcc.Graph(
-                                            figure=fig_industries, id="industries-graph"
-                                        )
-                                    )
-                                ),
-                                dbc.Row(
-                                    dbc.Col(
-                                        dcc.Graph(figure=fig_fields, id="fields-graph"),
-                                        className="graph-container",
-                                    )
-                                ),
-                                dbc.Row(
-                                    dbc.Col(
-                                        dcc.Graph(
-                                            figure=fig_choropleth, id="choropleth-graph"
-                                        ),
-                                        className="graph-container",
-                                    )
+                                html.H2(
+                                    "PEOPLE & RECRUITMENT ANALYTICS",
+                                    className="subtitle",
+                                    style={"margin-top": "0", "font-size": "1.5rem"},
                                 ),
                             ],
-                            className="graph-card",
+                            style={
+                                "display": "flex",
+                                "flex-direction": "column",
+                                "justify-content": "center",
+                            },
                         ),
                     ],
-                    width=9,
-                    id="right-column",
+                    align="center",
+                    className="mb-4",
+                ),
+                # Content: Left column for controls, right column for visualizations
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            [
+                                description_card(),
+                                html.Div(
+                                    ["initial child"],
+                                    id="output-clientside",
+                                    style={"display": "none"},
+                                ),
+                                generate_control_card(processed_data_df),
+                            ],
+                            width=3,
+                            id="left-column",
+                        ),
+                        dbc.Col(
+                            [
+                                # Stats Cards
+                                dbc.Card(
+                                    dbc.Row(
+                                        [
+                                            dbc.Col(
+                                                generate_stats_card(
+                                                    "Applications",
+                                                    num_of_applications,
+                                                    "./assets/icons/job-application-icon.png",
+                                                ),
+                                                width=2,
+                                            ),
+                                            dbc.Col(
+                                                generate_stats_card(
+                                                    "Countries",
+                                                    num_of_countries,
+                                                    "./assets/icons/country-icon.png",
+                                                ),
+                                                width=2,
+                                            ),
+                                            dbc.Col(
+                                                generate_stats_card(
+                                                    "Industries",
+                                                    num_of_industries,
+                                                    "./assets/icons/job-sector-icon.png",
+                                                ),
+                                                width=2,
+                                            ),
+                                            dbc.Col(
+                                                generate_stats_card(
+                                                    "Backgrounds",
+                                                    num_of_fields,
+                                                    "./assets/icons/job-area-icon.png",
+                                                ),
+                                                width=2,
+                                            ),
+                                            dbc.Col(
+                                                generate_stats_card(
+                                                    "Active",
+                                                    num_of_active,
+                                                    "./assets/icons/job-active-icon.png",
+                                                ),
+                                                width=2,
+                                            ),
+                                            dbc.Col(
+                                                generate_stats_card(
+                                                    "Interviews",
+                                                    num_of_interviews,
+                                                    "./assets/icons/job-interview-icon.png",
+                                                ),
+                                                width=2,
+                                            ),
+                                        ],
+                                    ),
+                                    id="stats_card",
+                                    className="card mb-4",
+                                ),
+                                # Graph Visualizations
+                                dbc.Card(
+                                    [
+                                        dbc.Row(
+                                            dbc.Col(
+                                                dcc.Graph(
+                                                    figure=fig_irene_sankey,
+                                                    id="sankey-graph",
+                                                ),
+                                                className="graph-container",
+                                            )
+                                        ),
+                                        dbc.Row(
+                                            dbc.Col(
+                                                dcc.Graph(
+                                                    figure=fig_industries,
+                                                    id="industries-graph",
+                                                )
+                                            )
+                                        ),
+                                        dbc.Row(
+                                            dbc.Col(
+                                                dcc.Graph(
+                                                    figure=fig_fields, id="fields-graph"
+                                                ),
+                                                className="graph-container",
+                                            )
+                                        ),
+                                        dbc.Row(
+                                            dbc.Col(
+                                                dcc.Graph(
+                                                    figure=fig_choropleth,
+                                                    id="choropleth-graph",
+                                                ),
+                                                className="graph-container",
+                                            )
+                                        ),
+                                    ],
+                                    className="graph-card",
+                                ),
+                            ],
+                            width=9,
+                            id="right-column",
+                        ),
+                    ],
                 ),
             ],
+        ),
+        html.Footer(
+            [
+                # Icons and email link
+                html.Div(
+                    [
+                        html.A(
+                            html.I(className="fab fa-linkedin-in"),  # LinkedIn icon
+                            href="https://www.linkedin.com/company/fox-techniques",
+                            target="_blank",
+                            className="footer-icon",
+                        ),
+                        html.A(
+                            html.I(className="fab fa-github"),  # GitHub icon
+                            href="https://github.com/fox-techniques",
+                            target="_blank",
+                            className="footer-icon",
+                        ),
+                        # Email Icon
+                        html.A(
+                            html.I(className="fas fa-envelope"),  # Email icon
+                            href="mailto:contact@fox-techniques.com?subject=Inquiry%20about%20Fox%20Techniques'%20Solutions%20and%20Services",
+                            className="footer-icon",
+                        ),
+                    ],
+                    className="footer-icons",
+                ),
+                # Footer Text
+                html.Div(
+                    [
+                        "2024 | ",
+                        html.A(
+                            "FOX TECHNIQUES",
+                            href="https://github.com/fox-techniques",  # Replace with your actual link
+                            target="_blank",
+                            className="footer-link",
+                        ),
+                    ],
+                    className="footer-text",
+                ),
+            ],
+            className="footer",
         ),
     ],
 )

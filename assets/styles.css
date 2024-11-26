@@ -23,11 +23,10 @@ body {
 .title {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: center;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 0;
-    font-size: 32px;
     font-weight: bold; /* Optional: Makes the title bold */
     color: #fca311; /* Optional: Sets the color for the title */
 }
@@ -36,10 +35,9 @@ body {
 .subtitle {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: center;
     text-align: center;
     margin-top: 5px;
-    font-size: 20px;
     color: #C05420; /* Optional: Sets the color for the subtitle */
 }
 
@@ -126,10 +124,10 @@ body {
 
 /* Card image styling */
 .card-img {
-    width: 50px; /* Set image width */
-    height: auto; /* Maintain aspect ratio */
-    align-self: center; /* Center the image */
-    margin-bottom: 10px; /* Add some spacing below the image */
+    width: 50px;
+    height: auto;
+    align-self: center; 
+    margin-bottom: 10px; 
 }
 
 /* Graph container styling */
@@ -185,6 +183,70 @@ body {
 .apply-button:hover {
     background-color: #fca311;
     border-color: #fca311;
-    transform: scale(1.2);  /* Enlarge the button slightly */
-    color: black;         /* Bright red on hover */
+    transform: scale(1.2); 
+    color: black;     
+}
+
+/* Sticky Footer Styling */
+.footer {
+    position: sticky;          /* Sticky positioning */
+    bottom: 0;                 /* Stick to the bottom of the viewport */
+    width: 100%;               /* Full-width footer */
+    background-color: #333;    /* Dark background color */
+    color: #fff;               /* White text */
+    text-align: center;        /* Center the text */
+    padding: 20px 20px;           /* Padding for spacing */
+    margin-top: 30px;
+    font-size: 16px;         
+    z-index: 10;           
+    box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Smaller screens */
+@media (max-width: 768px) {
+    .footer {
+        font-size: 12px;   
+        padding: 8px 0;    
+    }
+}
+
+
+/* Footer Icons Container */
+.footer-icons {
+    margin-bottom: 10px;   
+}
+
+/* Footer Icon Links */
+.footer-icon {
+    margin: 0 10px; 
+    color: #fff;      
+    font-size: 20px;     
+    transition: transform 0.5s ease, color 0.5s ease;
+    text-decoration: none;   
+}
+
+/* Hover Effect for Icons */
+.footer-icon:hover {
+    color: #fca311;            
+    transform: scale(1.2);
+}
+
+/* Footer Text */
+.footer-text {
+    font-size: 14px; 
+    margin-top: 10px;  
+    color: #fff; 
+}
+
+/* Footer Link Styling */
+.footer-link {
+    color: #fff;     
+    text-decoration: none; 
+    font-weight: bold;      
+}
+
+.footer-link:hover {
+    color: #fca311;         
+    text-decoration: none;
 }
