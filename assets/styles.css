@@ -148,3 +148,43 @@ body {
 .main-container {
     padding: 0px;
 }
+
+/* Dropdown styling */
+/* Style the dropdown container */
+.dark-dropdown .Select-control {
+    background-color: #333 !important; 
+    color: #fff !important;         
+    border: 1px solid #555 !important; 
+}
+
+/* Style the dropdown menu items */
+.dark-dropdown .Select-menu {
+    background-color: #333 !important; 
+}
+
+
+.dark-dropdown .Select-arrow {
+    border-color: #fca311 transparent transparent !important; 
+}
+
+/* Style the selected option in the dropdown box */
+.dark-dropdown .Select-value {
+    color: #fca311 !important;
+}
+
+.dark-dropdown .Select-value-label {
+    color: #fff !important;
+}
+
+.apply-button {
+    background-color: #fca311;
+    border-color: #fca311;
+    transition: transform 0.5s ease, color 0.5s ease;
+}
+
+.apply-button:hover {
+    background-color: #fca311;
+    border-color: #fca311;
+    transform: scale(1.2);  /* Enlarge the button slightly */
+    color: black;         /* Bright red on hover */
+}

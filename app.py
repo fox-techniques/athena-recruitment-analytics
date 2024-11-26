@@ -24,11 +24,9 @@ Modules Used:
 """
 
 from dash import Dash, html, dcc, Input, Output, State
+from dash import no_update, callback_context
 import dash_bootstrap_components as dbc
-import numpy as np
 import pandas as pd
-import os
-from datetime import datetime as dt
 
 from src.insights import get_overall_insights
 from src.data_loader import load_json_mappings
@@ -62,6 +60,7 @@ parsed_df = pd.read_csv("./data/output/parsed_data.csv")
 # Load mappings and enrich data
 company_industry_mapping, position_field_mapping = load_json_mappings()
 df = add_industry_and_field(parsed_df, company_industry_mapping, position_field_mapping)
+
 
 # Extract key metrics
 (
@@ -228,17 +227,23 @@ app.layout = dbc.Container(
                                         className="graph-container",
                                     )
                                 ),
-                                dbc.Row(dbc.Col(dcc.Graph(figure=fig_industries))),
                                 dbc.Row(
                                     dbc.Col(
-                                        dcc.Graph(figure=fig_fields),
+                                        dcc.Graph(
+                                            figure=fig_industries, id="industries-graph"
+                                        )
+                                    )
+                                ),
+                                dbc.Row(
+                                    dbc.Col(
+                                        dcc.Graph(figure=fig_fields, id="fields-graph"),
                                         className="graph-container",
                                     )
                                 ),
                                 dbc.Row(
                                     dbc.Col(
                                         dcc.Graph(
-                                            figure=fig_choropleth, id="choropleth-map"
+                                            figure=fig_choropleth, id="choropleth-graph"
                                         ),
                                         className="graph-container",
                                     )
@@ -257,15 +262,25 @@ app.layout = dbc.Container(
 
 
 @app.callback(
-    [Output("sankey-graph", "figure"), Output("choropleth-map", "figure")],
-    [Input("apply-btn", "n_clicks")],
+    [
+        Output("ir-level-select", "value"),
+        Output("country-select", "value"),
+        Output("globe-select", "value"),
+        Output("sankey-graph", "figure"),
+        Output("industries-graph", "figure"),
+        Output("fields-graph", "figure"),
+        Output("choropleth-graph", "figure"),
+    ],
+    [Input("apply-btn", "n_clicks"), Input("reset-btn", "n_clicks")],
     [
         State("ir-level-select", "value"),
         State("country-select", "value"),
         State("globe-select", "value"),
     ],
 )
-def update_figures(n_clicks, ir_levels, selected_countries, selected_projection):
+def update_figures(
+    apply_clicks, reset_clicks, ir_levels, selected_countries, selected_projection
+):
     """
     Update the figures based on the control panel values.
 
@@ -278,16 +293,67 @@ def update_figures(n_clicks, ir_levels, selected_countries, selected_projection)
     Returns:
         tuple: Updated Sankey and Choropleth figures.
     """
+
+    # Determine which button triggered the callback
+    ctx = callback_context
+    triggered_id = ctx.triggered[0]["prop_id"].split(".")[0]
+
+    # Default values for reset
+    default_ir_levels = ["", "Country", "Field"]
+    default_countries = df["Country"].unique()
+    default_projection = "natural earth1"
+
+    # Use default values if reset button is clicked
+    if triggered_id == "reset-btn":
+        ir_levels = default_ir_levels
+        selected_countries = default_countries
+        selected_projection = default_projection
+
     # Filter data based on selected countries
     filtered_data = df[df["Country"].isin(selected_countries)]
 
     # Create Sankey Diagram
     sankey_figure = create_sankey(
-        data=df,
+        data=filtered_data,
         levels=ir_levels,
         title="Irene-Sankey Diagram",
         color_template="plotly",
         font_color="#000000",
+    )
+
+    # Treemap: Top Industries
+    top_industries = filtered_data["Industry"].value_counts().reset_index(name="count")
+    industries_figure = create_treemap(
+        top_industries,
+        path=["Industry"],
+        values="count",
+        title="Top Industries",
+        color="count",
+        color_template="none",
+        font_color="#14213d",
+    )
+
+    # Bar Chart: Top Fields
+    top_fields = (
+        filtered_data["Field"].value_counts().head(10).reset_index(name="count")
+    )
+    total_count = top_fields["count"].sum()
+    top_fields["percentage_and_count"] = (top_fields["count"] / total_count).apply(
+        lambda x: f"{x:.2f}%"
+    ) + top_fields["count"].apply(lambda x: f" ({x})")
+
+    fields_figures = create_bar_chart(
+        data=top_fields,
+        x="count",
+        y="Field",
+        orientation="h",
+        color="count",
+        text="percentage_and_count",
+        title="Top Fields",
+        labels={"count": "", "Field": "", "percentage": "Percentage"},
+        color_scale="Viridis",
+        color_template="none",
+        font_color="#14213d",
     )
 
     # Create Choropleth Map
@@ -302,10 +368,18 @@ def update_figures(n_clicks, ir_levels, selected_countries, selected_projection)
         font_color="#14213d",
     )
 
-    return sankey_figure, choropleth_figure
+    return (
+        ir_levels,
+        selected_countries,
+        selected_projection,
+        sankey_figure,
+        industries_figure,
+        fields_figures,
+        choropleth_figure,
+    )
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8050))
-    app.run_server(host="0.0.0.0", port=port)
-    # app.run_server(debug=True)
+    # port = int(os.environ.get("PORT", 8050))
+    # app.run_server(host="0.0.0.0", port=port)
+    app.run_server(debug=True)
