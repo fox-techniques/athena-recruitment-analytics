@@ -37,7 +37,9 @@ def create_sankey(data, levels, title, color_template, font_color):
         plotly.graph_objects.Figure: Sankey diagram visualization.
     """
     # Generate the flow data using Irene's Sankey utilities
-    flow_df, node_map, link = irs.traverse_sankey_flow(data, levels)
+    flow_df, node_map, link = irs.traverse_sankey_flow(
+        data, levels, head_node_label="Applications"
+    )
 
     # Generate the Sankey diagram
     fig_sankey = irs.plot_irene_sankey_diagram(node_map, link)

@@ -86,18 +86,18 @@ app = Dash(
 server = app.server
 
 # Parsing and processing data for visualizations
-parsed_data_df = parse_job_application_directory(APPLICATIONS_DIR)
+# parsed_df = parse_job_application_directory(APPLICATIONS_DIR)
 updated_company_industry_mapping = predict_missing_company_industry(
-    find_missing_companies(parsed_data_df, company_industry_mapping),
+    find_missing_companies(parsed_df, company_industry_mapping),
     company_industry_mapping,
 )
 updated_position_field_mapping = predict_missing_position_field(
-    find_missing_positions(parsed_data_df, position_field_mapping),
+    find_missing_positions(parsed_df, position_field_mapping),
     position_field_mapping,
 )
 
 processed_data_df = add_industry_and_field(
-    parsed_data_df,
+    parsed_df,
     updated_company_industry_mapping,
     updated_position_field_mapping,
 )
@@ -119,7 +119,7 @@ app.layout = html.Div(
                     [
                         dbc.Col(
                             html.Img(
-                                src="./assets/icons/jobhunt-logo.png",
+                                src="./assets/logos/hiring-logo.png",
                                 className="logo",
                             ),
                             width="auto",
@@ -132,7 +132,7 @@ app.layout = html.Div(
                                     style={"margin-bottom": "0", "font-size": "3rem"},
                                 ),
                                 html.H2(
-                                    "PEOPLE & RECRUITMENT ANALYTICS",
+                                    "APPLICATION TRACKING & RECRUITMENT ANALYTICS",
                                     className="subtitle",
                                     style={"margin-top": "0", "font-size": "1.5rem"},
                                 ),
@@ -301,10 +301,11 @@ app.layout = html.Div(
                     [
                         "2024 | ",
                         html.A(
-                            "FOX TECHNIQUES",
-                            href="https://github.com/fox-techniques",  # Replace with your actual link
-                            target="_blank",
-                            className="footer-link",
+                            html.Img(
+                                src="assets/logos/fox-techniques-long-logo-light.png",
+                                className="footer-logo",
+                            ),
+                            href="https://github.com/fox-techniques",
                         ),
                     ],
                     className="footer-text",

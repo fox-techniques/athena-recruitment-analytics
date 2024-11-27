@@ -12,7 +12,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 10px;
     padding: 5px; /* Add padding around the logo */
     width: 90px;   /* Shrink the logo */
@@ -25,10 +25,10 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 0;
-    font-weight: bold; /* Optional: Makes the title bold */
-    color: #fca311; /* Optional: Sets the color for the title */
+    font-weight: 500;
+    color: #fca311; 
 }
 
 /* Sub-Title styling */
@@ -249,4 +249,9 @@ body {
 .footer-link:hover {
     color: #fca311;         
     text-decoration: none;
+}
+
+.footer-logo {
+    width: auto; 
+    height: 1.6rem;   
 }

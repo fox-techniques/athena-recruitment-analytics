@@ -32,30 +32,26 @@ def description_card():
             html.Br(),
             html.Span(
                 children=[
-                    html.H2(
+                    html.H3(
                         "Welcome to ",
                         style={"display": "inline", "margin-right": "0.2rem"},
-                    ),  # Regular H3 text
+                    ),
                     html.H2(
                         "ATHENA",
                         style={
-                            "display": "inline",  # Inline behavior
-                            "color": "#fca311",  # Highlight color
-                            "font-weight": "bold",  # Custom bold style
+                            "display": "inline",
+                            "color": "#fca311",
+                            "font-weight": 200,
                         },
                     ),
                 ],
-                style={"display": "inline"},  # Ensure the Span itself behaves inline
+                style={"display": "inline"},
             ),
-            html.H5(
-                "Application Tracking & Analytics Dashboard",
-                style={
-                    "margin-bottom": "20px",
-                },
-            ),
+            html.Br(),
             html.Div(
                 id="intro",
                 children="Explore your applicants' application, track progress, update status and analyze key insights to enhance the performance and efficiency of your recruitment process. Navigate through the dashboard to uncover trends and optimize your strategies effectively.",
+                style={"margin-top": "1rem"},
             ),
         ],
     )
@@ -73,6 +69,14 @@ def generate_control_card(df):
     """
 
     countries = df["Country"].unique()
+    columns_to_exclude_regex = r"Position|Num|Has|Timestamp"
+
+    # Filter levels and add "All Records" mapped to ""
+    possible_ir_levels = df.columns[~df.columns.str.contains(columns_to_exclude_regex)]
+    dropdown_options = [{"label": "1st Node", "value": ""}] + [
+        {"label": col, "value": col} for col in possible_ir_levels
+    ]
+
     globe_list = load_map_projections()
 
     return html.Div(
@@ -82,7 +86,7 @@ def generate_control_card(df):
             html.H6("Irene-Sankey Levels"),
             dcc.Dropdown(
                 id="ir-level-select",
-                options=["", "Country", "Field", "Industry", "Area"],
+                options=dropdown_options,
                 value=["", "Country", "Field"],
                 multi=True,
                 className="dark-dropdown",
