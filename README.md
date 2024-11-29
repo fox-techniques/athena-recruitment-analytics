@@ -1,4 +1,73 @@
-# Athena: People & Recruitment Analytics
+# ATHENA - Application Tracking & Recruitment Analytics
+
+ATHENA is a cutting-edge Plotly dashboard solution designed to streamline the recruitment process by providing comprehensive analytics and insights into job applications. With interactive visualizations, dynamic data filtering, and key performance metrics, ATHENA empowers users to track, analyze, and optimize their recruitment strategies. From identifying top industries and fields to visualizing application trends across countries, ATHENA delivers actionable insights to enhance decision-making and drive recruitment success.
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-darkcyan)](https://pypi.org/project/athena-recruitment-analytics/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/fox-techniques/athena-recruitment-analytics/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/badge/GitHub-athena--recruitment--analytics-181717?logo=github)](https://github.com/fox-techniques/athena-recruitment-analytics)
+
+## Table of Contents
+
+- [ATHENA - Application Tracking \& Recruitment Analytics](#athena---application-tracking--recruitment-analytics)
+  - [Table of Contents](#table-of-contents)
+  - [Documentation](#documentation)
+  - [Features](#features)
+  - [Instructions](#instructions)
+  - [Quick Start](#quick-start)
+  - [Usage](#usage)
+  - [Contribution](#contribution)
+  - [License](#license)
+  - [Acknowledgments](#acknowledgments)
+
+## Documentation
+
+The full documentation is available on **[GitHub Pages](https://fox-techniques.github.io/athena-recruitment-analytics/)**.
+
+
+## Features
+
+- **Interactive Dashboards**: Visualize data with treemaps, bar charts, choropleth maps, and Irene-Sankey diagrams.
+- **Key Metrics at a Glance**: Track essential statistics such as the number of applications, countries, industries, active applications, and interviews.
+- **Dynamic Filtering**: Adjust visualizations using filters for industries, countries, fields, and projections.
+- **Data Augmentation**: Predict missing data points for industries and positions using intelligent mapping.
+- **Comprehensive Visual Insights**: Explore Irene-Sankey flow diargam, top industries, application fields, and geographical trends.
+- **Customizable Projections**: Switch between different map projections for geographical analysis.
+- **Modular and Extensible Design**: Easily adaptable for additional features and data inputs.
+
+
+## Instructions
+
+> **Note**: Requires Python 3.8 or above.
+
+
+## Quick Start
+
+Here’s a quick example to create a recruitment analytics dashboard with **ATHENA**.
+
+
+
+## Usage
+
+
+
+## Contribution
+
+We welcome contributions! Visit our [Github](https://github.com/fox-techniques/athena-recuitment-analytics) repository, and to contribute:
+
+1. Fork the repository.
+2. Create a branch (`git checkout -b feature/NewFeature`).
+3. Commit your changes (`git commit -m 'Add NewFeature'`).
+4. Push to the branch (`git push origin feature/NewFeature`).
+5. Open a Pull Request.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/fox-techniques/athena-recuitment-analytics/blob/main/LICENSE) file for details.
+
+
+## Acknowledgments
+
 
 <a href="https://www.flaticon.com/free-icons/we-are-hiring" title="we are hiring icons">We are hiring icons created by Freepik - Flaticon</a>
 
