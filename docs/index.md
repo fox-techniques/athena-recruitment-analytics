@@ -4,7 +4,7 @@ title: ATHENA - Application Tracking & Recruitment Analytics
 
 # ATHENA
 
-ATHENA is a cutting-edge Plotly dashboard solution designed to streamline the recruitment process by providing comprehensive analytics and insights into job applications. With interactive visualizations, dynamic data filtering, and key performance metrics, ATHENA empowers users to track, analyze, and optimize their recruitment strategies. From identifying top industries and fields to visualizing application trends across countries, ATHENA delivers actionable insights to enhance decision-making and drive recruitment success.
+ATHENA is a Plotly dashboard solution designed to streamline the recruitment process by providing comprehensive analytics and insights into job applications. With interactive visualizations, dynamic data filtering, and key performance metrics, ATHENA empowers users to track, analyze, and optimize their recruitment strategies. From identifying top industries and fields to visualizing application trends across countries, ATHENA delivers actionable insights to enhance decision-making and drive recruitment success.
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-darkcyan)](https://github.com/fox-techniques/athena-recruitment-analytics)
 [![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)]()
@@ -25,6 +25,6 @@ ATHENA is a cutting-edge Plotly dashboard solution designed to streamline the re
 ## Quick Links
 
 - [GitHub Repository](https://github.com/fox-techniques/athena-recruitment-analytics)
-- [License]()
+- [License](https://github.com/fox-techniques/athena-recuitment-analytics/blob/main/LICENSE)
 
 Explore the documentation to learn how to customize and make the most of **ATHENA**!

@@ -18,6 +18,8 @@ ATHENA is a cutting-edge Plotly dashboard solution designed to streamline the re
   - [Contribution](#contribution)
   - [License](#license)
   - [Acknowledgments](#acknowledgments)
+    - [Icons and Graphics](#icons-and-graphics)
+    - [Open-Source Libraries](#open-source-libraries)
 
 ## Documentation
 
@@ -45,7 +47,6 @@ The full documentation is available on **[GitHub Pages](https://fox-techniques.g
 Here’s a quick example to create a recruitment analytics dashboard with **ATHENA**.
 
 
-
 ## Usage
 
 
@@ -68,15 +69,30 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 ## Acknowledgments
 
+We would like to acknowledge and thank the following individuals and resources for their contributions to the development of ATHENA: Application Tracking & Recruitment Analytics:
 
-<a href="https://www.flaticon.com/free-icons/we-are-hiring" title="we are hiring icons">We are hiring icons created by Freepik - Flaticon</a>
+### Icons and Graphics
 
-<a href="https://www.flaticon.com/free-icons/athena" title="athena icons">Athena icons created by Eucalyp - Flaticon</a>
+Icons used in this project are sourced from [Flaticon](https://www.flaticon.com):
 
-<a href="https://www.flaticon.com/free-icons/recruitment" title="recruitment icons">Recruitment icons created by Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/interview" title="interview icons">Interview icons created by Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/globe" title="globe icons">Globe icons created by Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/curriculum-vitae" title="curriculum vitae icons">Curriculum vitae icons created by Canticons - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/partner" title="partner icons">Partner icons created by Nuricon - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/work" title="work icons">Work icons created by Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/progress" title="progress icons">Progress icons created by HideMaru - Flaticon</a>
+- [ATHENA](https://www.flaticon.com/free-icons/athena) icon by Eucalyp
+- [We are hiring](https://www.flaticon.com/free-icons/we-are-hiring) icon by Freepik 
+- [Application](https://www.flaticon.com/free-icons/curriculum-vitae) icon by Awicon
+- [Countries](https://www.flaticon.com/free-icons/globe) icon by Freepik 
+- [Industries](https://www.flaticon.com/free-icons/partner) icon by Nuricon
+- [Backgrounds](https://www.flaticon.com/free-icons/work) icon by Freepik
+- [Active](https://www.flaticon.com/free-icons/progress) icon by HideMaru
+- [Interview](https://www.flaticon.com/free-icons/interview) icon created by Freepik
+
+
+### Open-Source Libraries
+
+- Dash by Plotly: For providing a robust framework for building interactive dashboards.
+- Pandas: For powerful data manipulation and analysis.
+- Plotly: For creating dynamic and customizable visualizations.
+- Dash Bootstrap Components: For beautiful UI components.
+
+Special Thanks to:
+
+- [Mahmoud Salah](https://github.com/Mahmoud2227) the inspiring [IMDB Dashboard](https://github.com/Mahmoud2227/IMDB-Dashboard) 
+- The open-source community for continuous innovation and support.

@@ -173,7 +173,7 @@ app.layout = html.Div(
                                                 generate_stats_card(
                                                     "Applications",
                                                     num_of_applications,
-                                                    "./assets/icons/job-application-icon.png",
+                                                    "./assets/icons/application-icon.png",
                                                 ),
                                                 width=2,
                                             ),
@@ -189,7 +189,7 @@ app.layout = html.Div(
                                                 generate_stats_card(
                                                     "Industries",
                                                     num_of_industries,
-                                                    "./assets/icons/job-sector-icon.png",
+                                                    "./assets/icons/sector-icon.png",
                                                 ),
                                                 width=2,
                                             ),
@@ -197,7 +197,7 @@ app.layout = html.Div(
                                                 generate_stats_card(
                                                     "Backgrounds",
                                                     num_of_fields,
-                                                    "./assets/icons/job-area-icon.png",
+                                                    "./assets/icons/area-icon.png",
                                                 ),
                                                 width=2,
                                             ),
@@ -205,7 +205,7 @@ app.layout = html.Div(
                                                 generate_stats_card(
                                                     "Active",
                                                     num_of_active,
-                                                    "./assets/icons/job-active-icon.png",
+                                                    "./assets/icons/active-icon.png",
                                                 ),
                                                 width=2,
                                             ),
@@ -213,7 +213,7 @@ app.layout = html.Div(
                                                 generate_stats_card(
                                                     "Interviews",
                                                     num_of_interviews,
-                                                    "./assets/icons/job-interview-icon.png",
+                                                    "./assets/icons/interview-icon.png",
                                                 ),
                                                 width=2,
                                             ),
