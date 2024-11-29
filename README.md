@@ -28,14 +28,14 @@ The full documentation is available on **[GitHub Pages](https://fox-techniques.g
 
 ## Features
 
-- **Interactive Dashboards**: Visualize data with treemaps, bar charts, choropleth maps, and Irene-Sankey diagrams.
+- **Interactive Visualizations**: Treemaps, bar charts, choropleth maps, and Irene-Sankey diagram.
 - **Key Metrics at a Glance**: Track essential statistics such as the number of applications, countries, industries, active applications, and interviews.
 - **Dynamic Filtering**: Adjust visualizations using filters for industries, countries, fields, and projections.
 - **Data Augmentation**: Predict missing data points for industries and positions using intelligent mapping.
 - **Comprehensive Visual Insights**: Explore Irene-Sankey flow diargam, top industries, application fields, and geographical trends.
 - **Customizable Projections**: Switch between different map projections for geographical analysis.
 - **Modular and Extensible Design**: Easily adaptable for additional features and data inputs.
-
+- **User-Friendly Design**: Easy setup and seamless integration with your data.
 
 ## Instructions
 
@@ -46,9 +46,53 @@ The full documentation is available on **[GitHub Pages](https://fox-techniques.g
 
 Here’s a quick example to create a recruitment analytics dashboard with **ATHENA**.
 
+1. Clone the Repository
+
+```bash
+git clone https://github.com/your-repo/athena-recruitment-analytics.git
+cd athena-recruitment-analytics
+```
+
+1. Set Up a Virtual Environment and Activate
+
+```bash
+python -m venv .venv
+```
+```bash
+# On Windows
+.venv\Scripts\activate
+```
+```bash
+# On macOS/Linux
+source .venv/bin/activate
+```
+
+2. Install Dependencies
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+3. Run the Dashboard
+
+```bash
+python app.py
+```
+
+Open your browser and go to `http://127.0.0.1:8050/`.
+
 
 ## Usage
 
+ATHENA expects job applications to follow a specific folder structure and naming convention:
+```
+<position> - <company> [<country_code>] (<status>)
+```
+
+Example of the folder structure: 
+
+![ATHENA Application folder structure](/docs/assets/data-directories-prep.png)
 
 
 ## Contribution
