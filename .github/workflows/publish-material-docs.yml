@@ -56,4 +56,4 @@ jobs:
 
       # Step 6: Build and Deploy
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --clean --remote-branch gh-pages
+        run: mkdocs gh-deploy --clean --remote-branch gh-pages --force
