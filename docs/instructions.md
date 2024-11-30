@@ -4,7 +4,7 @@ Follow these steps to clone the repository, set up the environment, and run the 
 
 **Prerequisites:**
 
-- Python 3.8 or higher
+- Python 3.10 or higher
 
 !!! tip
 
@@ -35,41 +35,73 @@ cd athena-recruitment-analytics
 
 ## Set Up a Virtual Environment
 
+=== "pip"
 
-**Step 4.** Create a virtual environment to isolate dependencies:
-
-```bash
-python -m venv .venv
-```
-
-**Step 5.** Activate the virtual environment:
-
-=== "Windows"
-
-    ```
-    .venv\Scripts\activate
-    ```
-
-=== "macOS/Linux"
+    **Step 4.** Create a virtual environment to isolate dependencies:
 
     ```bash
-    source .venv/bin/activate
+    python -m venv .venv
     ```
 
+    **Step 5.** Activate the virtual environment:
 
-**Step 6.** Upgrade pip to the latest version:
+    === "Windows"
 
-```bash
-pip install --upgrade pip
-```
+        ```
+        .venv\Scripts\activate
+        ```
 
-## Install Dependencies
+    === "macOS/Linux"
 
-**Step 7.** Install the required Python packages using requirements.txt:
+        ```bash
+        source .venv/bin/activate
+        ```
 
-```bash
-pip install -r requirements.txt
-```
+
+    **Step 6.** Upgrade pip to the latest version:
+
+    ```bash
+    pip install --upgrade pip
+    ```
+
+    ## Install Dependencies
+
+    **Step 7.** Install the required Python packages using requirements.txt:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+=== "poetry"
+
+    **Step 4.** Make sure Poetry is installed:
+
+    ```bash
+    curl -sSL https://install.python-poetry.org | python3 -
+    export PATH="$HOME/.local/bin:$PATH"
+    ```
+
+    **Step 5.** Configure a virtual environment to isolate dependencies:
+
+    ```bash
+    poetry install
+    ```
+
+    **Step 6.** Activate the virtual environment:
+
+    ```bash
+    poetry shell
+    ```
+
+    ## Update Dependencies
+
+    **Step 7.** Add, remove, or update packages:
+
+    ```bash
+    poetry add pandas
+    poetry remove pandas
+    poetry update
+    ```
 
 **Step 8.** Run the ATHENA Dashboard
 

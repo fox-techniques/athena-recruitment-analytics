@@ -3,6 +3,7 @@ Chapter Lead,Eneco,UK,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Scientist,BMW,ES,1,True,IIIR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Architect,Microsoft,US,1,True,CR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Management Specialist,TU Delft,FR,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
+Azure Data Engineer,Heineken,NL,1,True,ITIO,2024-11-22 09:49:56,2024-11-21 17:18:08
 Analytics Engineer,BMW,NL,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Architect,MAN,ES,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Platform Engineer Advanced,Deloitte,AT,1,True,IIIR,2024-11-22 09:49:56,2024-11-21 17:18:08
@@ -22,7 +23,6 @@ Data Engineer,Roche,NL,1,True,VR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Chapter Lead,MAN,UK,1,True,CR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Management Specialist,Heineken,US,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Business Analyst,Heineken,DE,1,True,R,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,Heineken,CH,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Manager,HelloFresh,CH,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Azure Data Engineer,Netflix,AT,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Manager,ING,UK,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
@@ -30,12 +30,12 @@ Azure Data Engineer,HelloFresh,AT,1,True,VR,2024-11-22 09:49:56,2024-11-21 17:18
 Data Platform Engineer Advanced,ABN Amro,CA,1,True,VIITO,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Scientist and Process Mining,Microsoft,AT,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Analyst,Eneco,AT,1,True,VIITO,2024-11-22 09:49:56,2024-11-21 17:18:08
+Azure Data Engineer,Heineken,CH,1,True,I,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Warehouse Engineer,BMW,ES,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Cloud Engineer,MAN,NL,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
 Cloud Engineer,Deloitte,CH,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
 Cloud Engineer,BasicFit,AT,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Architect,TU Delft,CA,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,Heineken,CA,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
 Data Scientist,BasicFit,US,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
 Cloud Engineer,BasicFit,DE,1,True,IIR,2024-11-22 09:49:56,2024-11-21 17:18:08
 Cloud Architect,HelloFresh,CH,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
