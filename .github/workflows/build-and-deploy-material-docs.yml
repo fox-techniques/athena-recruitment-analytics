@@ -1,44 +1,34 @@
-name: Deploy Material MkDocs to GitHub Pages
+name: Deploy MkDocs to GitHub Pages
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-  
-  workflow_dispatch: 
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Debug Repository Contents
-        run: ls -R 
-
+      # Step 2: Setup Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
+      # Step 3: Install MkDocs
       - name: Install MkDocs
         run: pip install mkdocs-material
 
-      - name: Fetch and Merge gh-pages
-        run: |
-          git fetch origin gh-pages:gh-pages || echo "gh-pages branch not found, skipping fetch."
-          if git rev-parse --verify gh-pages; then
-            git checkout gh-pages
-            git merge origin/gh-pages || echo "No changes to merge from remote gh-pages branch."
-          else
-            git checkout --orphan gh-pages
-            echo "Created a new orphan gh-pages branch."
-          fi
-
+      # Step 4: Deploy MkDocs to gh-pages
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --clean --remote-branch gh-pages
