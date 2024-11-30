@@ -1,76 +1,29 @@
-name: Deploy MkDocs to GitHub Pages
-
+name: ci 
 on:
   push:
     branches:
+      - master 
       - main
-  workflow_dispatch:
-
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
 jobs:
-  # Build job
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      # Step 1: Checkout the repository
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # Step 2: Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.x
-
-      # Step 3: Cache pip dependencies
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: pip-cache-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            pip-cache-${{ runner.os }}
-
-      # Step 4: Install MkDocs and dependencies
-      - name: Install MkDocs
-        run: |
-          pip install mkdocs-material
-
-      # Step 5: Build the MkDocs site
-      - name: Build MkDocs
-        run: mkdocs build --clean
-
-      # Step 6: Verify build size and remove unsupported files
-      - name: Verify and Clean Site
-        run: |
-          du -sh site/   # Log total size
-          find site/ -type l -exec rm {} +  # Remove any symlinks
-
-      # Step 7: Upload build artifacts
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: github-pages
-          path: ./site
-
-  # Deploy job
   deploy:
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      # Step 1: Download build artifact
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-
-      # Step 2: Deploy to GitHub Pages
-      - name: Deploy to gh-pages
+      - uses: actions/checkout@v4
+      - name: Configure Git Credentials
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          mkdocs gh-deploy --force
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+      - run: pip install mkdocs-material 
+      - run: mkdocs gh-deploy --force
