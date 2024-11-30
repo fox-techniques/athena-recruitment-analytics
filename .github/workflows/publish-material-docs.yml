@@ -1,0 +1,75 @@
+name: publish-material-docs
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+    branches:
+      - main
+      
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"          
+      - "v[0-9]+.[0-9]+.[0-9]+-alpha.[0-9]+" 
+      - "v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+"  
+      - "v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: release-with-approval
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Configure Git
+      - name: Configure Git Credentials
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # Step 3: Setup Python
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Step 4: Setup Cache
+      - name: Setup Cache for MkDocs Dependencies
+        uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ hashFiles('**/requirements.txt') }}
+          path: ~/.cache/pip
+          restore-keys: |
+            mkdocs-material-
+
+      # Step 5: Install Dependencies
+      - name: Install MkDocs Material and Plugins
+        run: pip install -r requirements_docs.txt
+
+      # Step 6: Validate Build
+      - name: Test MkDocs Build
+        run: mkdocs build
+
+      # Step 7: Upload Build Artifacts
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: mkdocs-site
+          path: site/
+
+      # Step 8: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        run: mkdocs gh-deploy --remote-branch gh-pages
