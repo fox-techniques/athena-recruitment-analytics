@@ -9,7 +9,7 @@ on:
       - 'mkdocs.yml'
   
   workflow_dispatch: 
-    
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,5 +26,16 @@ jobs:
       - name: Install MkDocs
         run: pip install mkdocs-material
 
+      - name: Fetch and Merge gh-pages
+        run: |
+          git fetch origin gh-pages:gh-pages || echo "gh-pages branch not found, skipping fetch."
+          if git rev-parse --verify gh-pages; then
+            git checkout gh-pages
+            git merge origin/gh-pages || echo "No changes to merge from remote gh-pages branch."
+          else
+            git checkout --orphan gh-pages
+            echo "Created a new orphan gh-pages branch."
+          fi
+
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --clean
+        run: mkdocs gh-deploy --clean --remote-branch gh-pages
