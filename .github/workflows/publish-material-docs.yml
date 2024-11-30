@@ -1,9 +1,9 @@
-name: ci 
+name: Publish Material MKDocs
 on:
   push:
     branches:
-      - master 
       - main
+      
 permissions:
   contents: write
 jobs:
