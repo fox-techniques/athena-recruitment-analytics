@@ -3,27 +3,37 @@ on:
   push:
     branches:
       - main
-      
+
 permissions:
   contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Configure Git Credentials
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
+
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+
+      # Fixing cache path to pip's default cache directory
       - uses: actions/cache@v4
         with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
+          key: pip-cache-${{ runner.os }}-${{ env.cache_id }}
+          path: ~/.cache/pip
           restore-keys: |
-            mkdocs-material-
+            pip-cache-${{ runner.os }}
+
+      # Install MkDocs Material
       - run: pip install mkdocs-material 
+
+      # Deploy MkDocs to GitHub Pages
       - run: mkdocs gh-deploy --force
