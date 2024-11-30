@@ -40,7 +40,7 @@ jobs:
           restore-keys: |
             pip-cache-
 
-      # Step 5: Install MkDocs and dependencies
+      # Step 5: Install MkDocs 
       - name: Install MkDocs
         run: |
           pip install mkdocs-material
