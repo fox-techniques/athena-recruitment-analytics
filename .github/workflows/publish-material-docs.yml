@@ -6,7 +6,7 @@ on:
       - 'docs/**'
       - 'mkdocs.yml'
     branches:
-      - main
+      - main 
       
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"          
@@ -18,15 +18,11 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: release-with-approval
-      url: ${{ steps.deployment.outputs.page_url }}
+    environment: release-with-approval
 
     steps:
       # Step 1: Checkout the repository
@@ -39,44 +35,25 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      # Step 3: Fetch Latest gh-pages Branch
-      - name: Fetch gh-pages
-        run: |
-          git fetch origin gh-pages:gh-pages || true
-          git checkout gh-pages || git checkout --orphan gh-pages
-
-      # Step 4: Setup Python
+      # Step 3: Setup Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: 3.x
 
-      # Step 5: Setup Cache
+      # Step 4: Setup Cache
       - name: Setup Cache for MkDocs Dependencies
         uses: actions/cache@v4
         with:
-          key: mkdocs-material-${{ hashFiles('**/requirements_docs.txt') }}
+          key: mkdocs-material-${{ hashFiles('**/mkdocs.yml') }}
           path: ~/.cache/pip
           restore-keys: |
             mkdocs-material-
 
-      # Step 6: Install Dependencies
+      # Step 5: Install Dependencies
       - name: Install MkDocs Material and Plugins
-        run: pip install -r requirements_docs.txt
+        run: pip install mkdocs-material
 
-      # Step 7: Validate Build
-      - name: Test MkDocs Build
-        run: mkdocs build
-
-      # Step 8: Upload Build Artifacts
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: mkdocs-site
-          path: site/
-
-      # Step 9: Deploy to GitHub Pages
+      # Step 6: Build and Deploy
       - name: Deploy to GitHub Pages
-        id: deployment
-        run: |
-          mkdocs gh-deploy --remote-branch gh-pages --force
+        run: mkdocs gh-deploy --clean --remote-branch gh-pages
