@@ -10,10 +10,8 @@ Directories:
     - MAPPING_DIR: Directory containing mapping files in JSON format.
 
 Functions:
-    - find_missing_companies: Identify companies missing from the company-industry mapping.
-    - find_missing_positions: Identify positions missing from the position-field mapping.
-    - predict_missing_company_industry: Predict missing company-industry mappings.
-    - predict_missing_position_field: Predict missing position-field mappings.
+    - update_missing_company_industry: Identify companies missing industry in the company-industry mapping.
+    - update_missing_position_field: Identify positions missing field in  the position-field mapping.
     - add_industry_and_field: Add "Industry" and "Field" columns to the dataset.
     - add_suffix_to_cross_column_duplicates: Add suffixes to duplicate values across columns.
     - add_missing_values: Introduce missing values (NaNs) into specific columns.
@@ -21,77 +19,56 @@ Functions:
 """
 
 import os
-import re
 import json
-import pandas as pd
+import re
 import numpy as np
-from transformers import pipeline
+
 from src.data_loader import load_status_mapping
 
 # Directory for mapping files
 MAPPING_DIR = "./data/mappings"
 
+MISSING_ENTRIES_FILE = os.path.join(MAPPING_DIR, "missing_entries.log")
+PLACEHOLDER = "MISSING!!!"
 
-def find_missing_companies(raw_data_df, company_industry_mapping):
+
+def log_missing_entry(entry_type, name):
     """
-    Identify companies that are missing from the company-industry mapping.
+    Log missing entries to a file for later review.
 
     Args:
-        raw_data_df (pd.DataFrame): DataFrame containing jobhunt data.
+        entry_type (str): The type of missing entry (e.g., "Company", "Position").
+        name (str): The name of the missing entry.
+    """
+    with open(MISSING_ENTRIES_FILE, "a") as file:
+        file.write(f"{entry_type}: {name}\n")
+    print(f"Logged missing {entry_type.lower()}: '{name}' to {MISSING_ENTRIES_FILE}")
+
+
+def update_missing_company_industry(df, company_industry_mapping):
+    """
+    Update industries for companies missing in the company-industry mapping.
+
+    Args:
+        df (DataFrame): Enriched job application data.
         company_industry_mapping (dict): Existing mapping of companies to industries.
 
     Returns:
-        list: List of companies that are missing from the mapping.
+        dict: Updated company-industry mapping.
     """
-    unique_companies = raw_data_df["Company"].unique()
-    available_companies = set(company_industry_mapping.keys())
-    missing_companies = [
-        company for company in unique_companies if company not in available_companies
-    ]
-    return missing_companies
-
-
-def find_missing_positions(raw_data_df, position_field_mapping):
-    """
-    Identify positions that are missing from the position-field mapping.
-
-    Args:
-        raw_data_df (pd.DataFrame): DataFrame containing jobhunt data.
-        position_field_mapping (dict): Existing mapping of positions to fields.
-
-    Returns:
-        list: List of positions that are missing from the mapping.
-    """
-    unique_positions = raw_data_df["Position"].unique()
-    available_positions = set(position_field_mapping.keys())
-    missing_positions = [
-        position for position in unique_positions if position not in available_positions
-    ]
-    return missing_positions
-
-
-def predict_missing_company_industry(company_names, company_industry_mapping):
-    """
-    Predict industries for companies missing in the company-industry mapping.
-
-    Args:
-        company_names (list): List of company names to predict industries for.
-        company_industry_mapping (dict): Existing mapping of companies to industries.
-
-    Returns:
-        dict: Updated company-industry mapping with predictions.
-    """
-    industries = list(set(company_industry_mapping.values()))
-    classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
     updated_mapping = company_industry_mapping.copy()
+    company_names = df["Company"].unique()
 
     for company in company_names:
         clean_company_name = re.sub(r"\sx\d+$", "", company)
         if clean_company_name not in updated_mapping:
-            result = classifier(clean_company_name, industries)
-            predicted_industry = result["labels"][0]
-            print(f"Predicted industry for {clean_company_name}: {predicted_industry}")
-            updated_mapping[clean_company_name] = predicted_industry
+            print(f"Industry for company '{clean_company_name}' is missing.")
+            log_missing_entry(
+                "ALERT - Missing industry for company", clean_company_name
+            )
+            updated_mapping[clean_company_name] = (
+                PLACEHOLDER  # Add placeholder for missing entry
+            )
 
     updated_filepath = os.path.join(MAPPING_DIR, "company_industry.json")
     with open(updated_filepath, "w") as file:
@@ -99,27 +76,25 @@ def predict_missing_company_industry(company_names, company_industry_mapping):
     return updated_mapping
 
 
-def predict_missing_position_field(job_positions, position_field_mapping):
+def update_missing_position_field(df, position_field_mapping):
     """
-    Predict fields for positions missing in the position-field mapping.
+    Update fields for positions missing in the position-field mapping.
 
     Args:
-        job_positions (list): List of job positions to predict fields for.
+        df (DataFrame): Enriched job application data.
         position_field_mapping (dict): Existing mapping of positions to fields.
 
     Returns:
-        dict: Updated position-field mapping with predictions.
+        dict: Updated position-field mapping.
     """
-    fields = list(set(position_field_mapping.values()))
-    classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
     updated_mapping = position_field_mapping.copy()
+    job_positions = df["Position"].unique()
 
     for position in job_positions:
         if position not in updated_mapping:
-            result = classifier(position, fields)
-            predicted_field = result["labels"][0]
-            print(f"Predicted field for {position}: {predicted_field}")
-            updated_mapping[position] = predicted_field
+            print(f"Field for position '{position}' is missing.")
+            log_missing_entry("ALERT - Missing field for position", position)
+            updated_mapping[position] = PLACEHOLDER  # Add placeholder for missing entry
 
     updated_filepath = os.path.join(MAPPING_DIR, "position_field.json")
     with open(updated_filepath, "w") as file:

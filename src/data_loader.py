@@ -20,9 +20,50 @@ import pandas as pd
 import os
 import json
 
+from src.data_parser import parse_job_application_directory
+
 # Define directories for mappings and output data
 MAPPING_DIR = "./data/mappings"
 OUTPUT_DIR = "./data/output"
+
+
+def parse_and_load_data(applications_dir, output_dir):
+    """
+    Parse data from the application directory or load pre-parsed data from the output directory.
+
+    This function checks if `applications_dir` exists and is non-empty. If so, it parses the data,
+    overwrites the existing `parsed_data.csv` in `output_dir`, and returns the parsed data.
+    Otherwise, it loads the data from `parsed_data.csv` in `output_dir` if it exists.
+
+    Args:
+        applications_dir (str): Path to the directory containing application files to parse.
+        output_dir (str): Path to the directory where parsed data is stored.
+
+    Returns:
+        pandas.DataFrame: The parsed or loaded data as a DataFrame.
+
+    Raises:
+        FileNotFoundError: If neither `applications_dir` contains data nor `output_dir/parsed_data.csv` exists.
+    """
+
+    parsed_data_filepath = os.path.join(output_dir, "parsed_data.csv")
+
+    if os.path.exists(applications_dir):
+        if os.listdir(applications_dir):
+            print(f"Parsing data from APPLICATION_DIR: {applications_dir}")
+            parsed_df = parse_job_application_directory(applications_dir)
+            print(f"Data has been parsed from: {parsed_data_filepath}")
+
+    elif os.path.exists(parsed_data_filepath):
+        print(f"Loading data from OUTPUT_DIR: {parsed_data_filepath}")
+        parsed_df = pd.read_csv(parsed_data_filepath)
+
+    else:
+        raise FileNotFoundError(
+            "No data available to load or parse. Ensure APPLICATION_DIR or OUTPUT_DIR is populated."
+        )
+
+    return parsed_df
 
 
 def load_map_projections():

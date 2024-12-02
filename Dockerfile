@@ -1,17 +1,32 @@
-# Base image with Python
+# Use a lightweight Python image
 FROM python:3.10-slim
 
-# Set working directory in the container
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
 WORKDIR /app
 
-# Copy the app's code into the container
-COPY . /app
+# Install system dependencies for Dash app
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    build-essential \
+    libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
+# Copy the requirements file first for caching
+COPY requirements.txt .
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port that Dash will run on
+# Copy the rest of the application code
+COPY . .
+
+# Expose the Dash default port
 EXPOSE 8050
 
-# Run the app with Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8050", "app:server"]
+# Command to run the Dash app
+CMD ["python", "app.py"]

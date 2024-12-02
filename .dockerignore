@@ -1,1 +1,23 @@
+# Git-related files
 .git
+
+# GitHub workflows
+.github
+
+# Python virtual environment
+.venv
+
+# Data files 
+data/job_applications
+data/job_applications_org
+
+# Documentation and build-related files
+docs
+site
+mkdocs.yml
+
+# Python cache (ignore all occurrences recursively)
+**/__pycache__/
+
+# Unnecessary text files
+README.md

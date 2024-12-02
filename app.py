@@ -27,13 +27,10 @@ from dash import Dash
 import dash_bootstrap_components as dbc
 
 from src.insights import get_overall_insights
-from src.data_loader import load_json_mappings
-from src.data_parser import parse_job_application_directory
+from src.data_loader import load_json_mappings, parse_and_load_data
 from src.data_generator import (
-    find_missing_companies,
-    find_missing_positions,
-    predict_missing_company_industry,
-    predict_missing_position_field,
+    update_missing_company_industry,
+    update_missing_position_field,
     add_industry_and_field,
     extend_status_levels,
 )
@@ -43,6 +40,7 @@ from pages.generate_layout import generate_layout
 from callbacks.update_figures import register_callbacks
 
 APPLICATIONS_DIR = "./data/job_applications"
+OUTPUT_DIR = "./data/output"
 
 # Initialize the app
 app = Dash(
@@ -57,22 +55,21 @@ app = Dash(
 
 server = app.server
 
-# Parsing and processing data for visualizations
-parsed_df = parse_job_application_directory(APPLICATIONS_DIR)
+# Parsing and processing application directory for visualizations
+parsed_df = parse_and_load_data(APPLICATIONS_DIR, OUTPUT_DIR)
 
 # Load mappings and enrich data
 company_industry_mapping, position_field_mapping = load_json_mappings()
+
 enriched_df = add_industry_and_field(
     parsed_df, company_industry_mapping, position_field_mapping
 )
 
-updated_company_industry_mapping = predict_missing_company_industry(
-    find_missing_companies(enriched_df, company_industry_mapping),
-    company_industry_mapping,
+updated_company_industry_mapping = update_missing_company_industry(
+    enriched_df, company_industry_mapping
 )
-updated_position_field_mapping = predict_missing_position_field(
-    find_missing_positions(enriched_df, position_field_mapping),
-    position_field_mapping,
+updated_position_field_mapping = update_missing_position_field(
+    enriched_df, position_field_mapping
 )
 
 updated_data_df = add_industry_and_field(
@@ -97,6 +94,5 @@ app.layout = generate_layout(extended_data_df, metrics, visualizations)
 register_callbacks(app, extended_data_df)
 
 if __name__ == "__main__":
-    # port = int(os.environ.get("PORT", 8050))
-    # app.run_server(host="0.0.0.0", port=port)
-    app.run_server(debug=True)
+    # app.run_server(debug=True)
+    app.run_server(host="0.0.0.0", port=8050)
