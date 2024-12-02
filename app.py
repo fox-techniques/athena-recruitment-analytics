@@ -1,5 +1,5 @@
 """
-Athena Jobhunt Analytics Dashboard
+ATHENA Application Tracking & Recruitment Analytics Dashboard
 
 This application is built using Dash to provide insights and analytics for job applications.
 It includes an interactive interface to track, analyze, and visualize job application data.
@@ -35,6 +35,7 @@ from src.data_generator import (
     predict_missing_company_industry,
     predict_missing_position_field,
     add_industry_and_field,
+    extend_status_levels,
 )
 from src.data_visualizations import overview_visualizations
 
@@ -51,14 +52,13 @@ app = Dash(
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
         "./assets/styles.css",
     ],
-    title="Athena: Recruitment Analytics",
+    title="ATHENA - Recruitment Analytics",
 )
 
 server = app.server
 
 # Parsing and processing data for visualizations
 parsed_df = parse_job_application_directory(APPLICATIONS_DIR)
-
 
 # Load mappings and enrich data
 company_industry_mapping, position_field_mapping = load_json_mappings()
@@ -81,18 +81,20 @@ updated_data_df = add_industry_and_field(
     updated_position_field_mapping,
 )
 
-# Extract key metrics
-metrics = get_overall_insights(updated_data_df)
+# Extend status codes to levels
+extended_data_df = extend_status_levels(updated_data_df)
 
+# Extract key metrics
+metrics = get_overall_insights(extended_data_df)
 
 # Generate visualizations
-visualizations = overview_visualizations(updated_data_df)
+visualizations = overview_visualizations(extended_data_df)
 
 # Assign layout
-app.layout = generate_layout(updated_data_df, metrics, visualizations)
+app.layout = generate_layout(extended_data_df, metrics, visualizations)
 
 # Register callbacks
-register_callbacks(app, updated_data_df)
+register_callbacks(app, extended_data_df)
 
 if __name__ == "__main__":
     # port = int(os.environ.get("PORT", 8050))

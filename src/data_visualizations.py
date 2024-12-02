@@ -21,38 +21,38 @@ from src.data_loader import load_countries_ISO
 import irene_sankey as irs
 
 
-def create_sankey(data, levels, title, color_template, font_color):
+def create_irene_sankey(data, levels, title, color_template, font_color):
     """
-    Generate a Sankey diagram for hierarchical flow data.
+    Generate a Irene-Sankey diagram for hierarchical flow data.
 
     Args:
         data (pd.DataFrame): DataFrame containing the flow data.
         levels (list of str): List of columns in the DataFrame representing levels of hierarchy.
             e.g. ["", "Country", "Field"]
-        title (str): Title of the Sankey diagram.
+        title (str): Title of the Irene-Sankey diagram.
         color_template (str): Plotly template to use for styling.
         font_color (str): Color of the text in the visualization.
 
     Returns:
-        plotly.graph_objects.Figure: Sankey diagram visualization.
+        plotly.graph_objects.Figure: Irene-Sankey diagram visualization.
     """
-    # Generate the flow data using Irene's Sankey utilities
+    # Generate the flow data using Irene-Sankey utilities
     flow_df, node_map, link = irs.traverse_sankey_flow(
         data, levels, head_node_label="Applications"
     )
 
     # Generate the Sankey diagram
-    fig_sankey = irs.plot_irene_sankey_diagram(node_map, link)
+    fig_irene_sankey = irs.plot_irene_sankey_diagram(node_map, link)
 
     # Apply layout customizations
-    fig_sankey.update_layout(
+    fig_irene_sankey.update_layout(
         title=title,
         template=color_template,
         font=dict(color=font_color),
         title_x=0.5,
     )
 
-    return fig_sankey
+    return fig_irene_sankey
 
 
 def create_treemap(data, path, values, title, color, color_template, font_color):
@@ -208,7 +208,7 @@ def overview_visualizations(
     map_projection="natural earth1",
 ):
     """
-    Generate all overview visualizations for the jobhunt dataset.
+    Generate all overview visualizations for the recruitment dataset.
 
     Args:
         processed_data_df (pd.DataFrame): Processed applicants' data.
@@ -277,7 +277,7 @@ def overview_visualizations(
     )
 
     # Sankey Diagram
-    fig_irene_sankey = create_sankey(
+    fig_irene_sankey = create_irene_sankey(
         data=processed_data_df,
         levels=["", "Country", "Field"],
         title="Irene-Sankey Flow Diagram",

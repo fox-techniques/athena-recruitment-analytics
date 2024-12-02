@@ -1,12 +1,13 @@
 from dash import Input, Output, State, callback_context
-import pandas as pd
 
 from src.data_visualizations import (
-    create_sankey,
+    create_irene_sankey,
     create_treemap,
     create_bar_chart,
     create_choropleth,
 )
+
+from src.utils import reorder_and_place_status_levels
 
 
 def register_callbacks(app, df):
@@ -48,7 +49,16 @@ def register_callbacks(app, df):
         triggered_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
         # Default values for reset
-        default_ir_levels = ["", "Country", "Field"]
+        default_ir_levels = [
+            "1st Node",
+            "Field",
+            "StatusLevel1",
+            "StatusLevel2",
+            "StatusLevel3",
+            "StatusLevel4",
+            "StatusLevel5",
+        ]
+
         default_countries = df["Country"].unique()
         default_projection = "natural earth1"
 
@@ -61,10 +71,13 @@ def register_callbacks(app, df):
         # Filter data based on selected countries
         filtered_data = df[df["Country"].isin(selected_countries)]
 
-        # Create Sankey Diagram
-        sankey_figure = create_sankey(
+        # Handle 1st Node position in the list and status levels order
+        modified_ir_levels = reorder_and_place_status_levels(ir_levels)
+
+        # Create Irene-Sankey Diagram
+        irene_sankey_figure = create_irene_sankey(
             data=filtered_data,
-            levels=ir_levels,
+            levels=modified_ir_levels,
             title="Irene-Sankey Diagram",
             color_template="plotly",
             font_color="#000000",
@@ -123,7 +136,7 @@ def register_callbacks(app, df):
             ir_levels,
             selected_countries,
             selected_projection,
-            sankey_figure,
+            irene_sankey_figure,
             industries_figure,
             fields_figures,
             choropleth_figure,

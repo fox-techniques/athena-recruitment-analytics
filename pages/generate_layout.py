@@ -9,7 +9,7 @@ from src.control_panel import (
 
 def generate_layout(processed_data_df, metrics, visualizations):
     """
-    Generate the layout for the Athena dashboard.
+    Generate the layout for the ATHENA dashboard.
 
     Args:
         processed_data_df (DataFrame): The processed job application data.
@@ -19,7 +19,7 @@ def generate_layout(processed_data_df, metrics, visualizations):
                                 (industries_chart, fields_chart, choropleth_map, sankey_diagram).
 
     Returns:
-        html.Div: The full layout of the Athena dashboard.
+        html.Div: The full layout of the ATHENA dashboard.
     """
     # Unpack metrics and visualizations
     (

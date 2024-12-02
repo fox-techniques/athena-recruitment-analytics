@@ -57,12 +57,24 @@ def description_card():
     )
 
 
-def generate_control_card(df):
+def generate_control_card(
+    df,
+    dropdown_ir_default_values=[
+        "1st Node",
+        "Field",
+        "StatusLevel1",
+        "StatusLevel2",
+        "StatusLevel3",
+        "StatusLevel4",
+        "StatusLevel5",
+    ],
+):
     """
     Create a control panel for filtering data visualizations.
 
     Args:
-        df (DataFrame):
+        df (DataFrame): DataFrame containing data for dropdown options.
+        dropdown_ir_default_values (list): Default levels for the dropdown selection.
 
     Returns:
         html.Div: A Div containing the control panel for data visualizations.
@@ -73,9 +85,7 @@ def generate_control_card(df):
 
     # Filter levels and add "All Records" mapped to ""
     possible_ir_levels = df.columns[~df.columns.str.contains(columns_to_exclude_regex)]
-    dropdown_options = [{"label": "1st Node", "value": ""}] + [
-        {"label": col, "value": col} for col in possible_ir_levels
-    ]
+    dropdown_options = ["1st Node"] + [col for col in possible_ir_levels]
 
     globe_list = load_map_projections()
 
@@ -87,7 +97,7 @@ def generate_control_card(df):
             dcc.Dropdown(
                 id="ir-level-select",
                 options=dropdown_options,
-                value=["", "Country", "Field"],
+                value=dropdown_ir_default_values,
                 multi=True,
                 className="dark-dropdown",
             ),
