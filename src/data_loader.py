@@ -22,9 +22,9 @@ import json
 
 from src.data_parser import parse_job_application_directory
 
-# Define directories for mappings and output data
-MAPPING_DIR = "./data/mappings"
-OUTPUT_DIR = "./data/output"
+# Directories for data and mappings
+MAPPING_DIR = os.getenv("MAPPING_DIR", "./data/mappings")
+OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./data/output")
 
 
 def parse_and_load_data(applications_dir, output_dir):

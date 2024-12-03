@@ -65,61 +65,82 @@ def generate_layout(processed_data_df, metrics, visualizations):
     )
 
     # Stats Cards Section
-    stats_cards = dbc.Card(
-        dbc.Row(
-            [
-                dbc.Col(
-                    generate_stats_card(
-                        "Applications",
-                        num_of_applications,
-                        "./assets/icons/application-icon.png",
-                    ),
-                    width=2,
+    stats_cards = dbc.Row(
+        [
+            dbc.Col(
+                generate_stats_card(
+                    "Applications",
+                    num_of_applications,
+                    "./assets/icons/application-icon.png",
                 ),
-                dbc.Col(
-                    generate_stats_card(
-                        "Countries",
-                        num_of_countries,
-                        "./assets/icons/country-icon.png",
-                    ),
-                    width=2,
+                xs=12,
+                sm=6,
+                md=4,
+                lg=2,  # Full width on xs, two per row on sm, grid on larger screens
+                className="mb-1",  # Spacing for vertical stacking
+            ),
+            dbc.Col(
+                generate_stats_card(
+                    "Countries",
+                    num_of_countries,
+                    "./assets/icons/country-icon.png",
                 ),
-                dbc.Col(
-                    generate_stats_card(
-                        "Industries",
-                        num_of_industries,
-                        "./assets/icons/sector-icon.png",
-                    ),
-                    width=2,
+                xs=12,
+                sm=6,
+                md=4,
+                lg=2,
+                className="mb-1",
+            ),
+            dbc.Col(
+                generate_stats_card(
+                    "Industries",
+                    num_of_industries,
+                    "./assets/icons/sector-icon.png",
                 ),
-                dbc.Col(
-                    generate_stats_card(
-                        "Backgrounds",
-                        num_of_fields,
-                        "./assets/icons/area-icon.png",
-                    ),
-                    width=2,
+                xs=12,
+                sm=6,
+                md=4,
+                lg=2,
+                className="mb-1",
+            ),
+            dbc.Col(
+                generate_stats_card(
+                    "Backgrounds",
+                    num_of_fields,
+                    "./assets/icons/area-icon.png",
                 ),
-                dbc.Col(
-                    generate_stats_card(
-                        "Active",
-                        num_of_active,
-                        "./assets/icons/active-icon.png",
-                    ),
-                    width=2,
+                xs=12,
+                sm=6,
+                md=4,
+                lg=2,
+                className="mb-1",
+            ),
+            dbc.Col(
+                generate_stats_card(
+                    "Active",
+                    num_of_active,
+                    "./assets/icons/active-icon.png",
                 ),
-                dbc.Col(
-                    generate_stats_card(
-                        "Interviews",
-                        num_of_interviews,
-                        "./assets/icons/interview-icon.png",
-                    ),
-                    width=2,
+                xs=12,
+                sm=6,
+                md=4,
+                lg=2,
+                className="mb-1",
+            ),
+            dbc.Col(
+                generate_stats_card(
+                    "Interviews",
+                    num_of_interviews,
+                    "./assets/icons/interview-icon.png",
                 ),
-            ]
-        ),
-        id="stats_card",
-        className="card mb-4",
+                xs=12,
+                sm=6,
+                md=4,
+                lg=2,
+                className="mb-1",
+            ),
+        ],
+        className="g-3 stats-card-container",  # Adds gutter spacing between rows and columns
     )
 
     # Visualizations Section
@@ -191,16 +212,28 @@ def generate_layout(processed_data_df, metrics, visualizations):
                     ),
                     generate_control_card(processed_data_df),
                 ],
-                width=3,
+                xs=12,
+                sm=12,
+                md=3,
+                lg=3,
+                xl=3,
                 id="left-column",
             ),
             # Right Column
             dbc.Col(
-                [stats_cards, visualizations_section],
-                width=9,
+                [
+                    stats_cards,
+                    visualizations_section,
+                ],
+                xs=12,
+                sm=12,
+                md=9,
+                lg=9,
+                xl=9,
                 id="right-column",
             ),
-        ]
+        ],
+        align="start",
     )
 
     # Full Layout

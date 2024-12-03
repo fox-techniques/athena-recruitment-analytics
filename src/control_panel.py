@@ -34,7 +34,7 @@ def description_card():
                 children=[
                     html.H3(
                         "Welcome to ",
-                        style={"display": "inline", "margin-right": "0.2rem"},
+                        style={"display": "inline"},
                     ),
                     html.H2(
                         "ATHENA",
@@ -119,7 +119,6 @@ def generate_control_card(
                 multi=False,
                 className="dark-dropdown",
             ),
-            html.Br(),
             html.Div(
                 children=[
                     dbc.Button(
@@ -133,6 +132,7 @@ def generate_control_card(
                 ],
                 style={"margin-top": "20px"},
             ),
+            html.Br(),
         ],
     )
 
