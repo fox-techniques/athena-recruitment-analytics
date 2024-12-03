@@ -33,7 +33,6 @@ The full documentation is available on **[GitHub Pages](https://fox-techniques.g
 - **Interactive Visualizations**: Treemaps, bar charts, choropleth maps, and Irene-Sankey diagram.
 - **Key Metrics at a Glance**: Track essential statistics such as the number of applications, countries, industries, active applications, and interviews.
 - **Dynamic Filtering**: Adjust visualizations using filters for industries, countries, fields, and projections.
-- **Data Augmentation**: Predict missing data points for industries and positions using intelligent mapping.
 - **Comprehensive Visual Insights**: Explore Irene-Sankey flow diargam, top industries, application fields, and geographical trends.
 - **Customizable Projections**: Switch between different map projections for geographical analysis.
 - **Modular and Extensible Design**: Easily adaptable for additional features and data inputs.
