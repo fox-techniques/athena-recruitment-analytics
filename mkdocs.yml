@@ -47,8 +47,6 @@ extra:
       link: mailto:contact+athena@fox-techniques.com?subject=Inquiry%20about%20ATHENA
     - icon: fontawesome/brands/github
       link: https://github.com/fox-techniques/athena-recruitment-analytics
-    - icon: fontawesome/brands/slack
-      link: https://join.slack.com/t/irene-sankey/shared_invite/zt-2tx8bjefp-nZu1EnLZP165mGvPlP9t_Q
     - icon: fontawesome/brands/discord
       link: https://discord.gg/5BbqZNPC
     - icon: fontawesome/brands/x-twitter
@@ -56,7 +54,7 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/fox-techniques/
 
-copyright: Copyright &copy; 2024 Fox-Techniques
+copyright: Copyright &copy; 2024 FOX Techniques
 
 markdown_extensions:
   - tables
