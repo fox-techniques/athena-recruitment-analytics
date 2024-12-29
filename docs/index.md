@@ -2,9 +2,9 @@
 title: ATHENA - Application Tracking & Recruitment Analytics
 ---
 
-# ATHENA
+# ATHENA: Recruitment Analytics
 
-![ATHENA Screenshot](assets/athena-banner.png){ width=800 }
+![ATHENA Flyer](assets/athena-flyer.png){ width=200 }
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-darkcyan)](https://github.com/fox-techniques/athena-recruitment-analytics)
 [![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)]()
