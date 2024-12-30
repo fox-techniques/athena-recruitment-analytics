@@ -1,7 +1,5 @@
 # ATHENA - Application Tracking & Recruitment Analytics
 
-![ATHENA Screenshot](docs/assets/athena-banner.png)
-
 [![Python](https://img.shields.io/badge/Python-3.10%2B-darkcyan)](https://pypi.org/project/athena-recruitment-analytics/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/fox-techniques/athena-recruitment-analytics/blob/main/LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-athena--recruitment--analytics-181717?logo=github)](https://github.com/fox-techniques/athena-recruitment-analytics)
