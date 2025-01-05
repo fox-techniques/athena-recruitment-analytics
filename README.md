@@ -119,8 +119,6 @@ We would like to acknowledge and thank the following individuals and resources f
 
 Icons used in this project are sourced from [Flaticon](https://www.flaticon.com):
 
-- [ATHENA](https://www.flaticon.com/free-icons/athena) icon by Eucalyp
-- [We are hiring](https://www.flaticon.com/free-icons/we-are-hiring) icon by Freepik 
 - [Application](https://www.flaticon.com/free-icons/curriculum-vitae) icon by Awicon
 - [Countries](https://www.flaticon.com/free-icons/globe) icon by Freepik 
 - [Industries](https://www.flaticon.com/free-icons/partner) icon by Nuricon

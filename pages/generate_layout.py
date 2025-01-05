@@ -42,7 +42,7 @@ def generate_layout(processed_data_df, metrics, visualizations):
     header = dbc.Row(
         [
             dbc.Col(
-                html.Img(src="./assets/logos/hiring-logo.png", className="logo"),
+                html.Img(src="./assets/logos/logo.png", className="logo"),
                 width="auto",
             ),
             dbc.Col(
@@ -183,7 +183,7 @@ def generate_layout(processed_data_df, metrics, visualizations):
             # Footer Text
             html.Div(
                 [
-                    "2024 | ",
+                    "2025 | ",
                     html.A(
                         html.Img(
                             src="assets/logos/fox-techniques-long-logo-light.png",
