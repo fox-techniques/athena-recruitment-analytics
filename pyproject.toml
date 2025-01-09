@@ -2,7 +2,7 @@
 name = "athena-recruitment-analytics"
 version = "0.1.0"
 description = "Application Tracking \\& Recruitment Analytics Dashboard"
-authors = ["FOX Techniques <info+athena@fox-techniques.com>"]
+authors = ["FOX Techniques <ali.nabbi@fox-techniques.com>"]
 license = "MIT"
 readme = "README.md"
 

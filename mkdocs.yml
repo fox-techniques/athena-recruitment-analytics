@@ -44,7 +44,7 @@ nav:
 extra:
   social:
     - icon: fontawesome/solid/envelope
-      link: mailto:contact+athena@fox-techniques.com?subject=Inquiry%20about%20ATHENA
+      link: mailto:contact@fox-techniques.com?subject=Inquiry%20about%20ATHENA
     - icon: fontawesome/brands/github
       link: https://github.com/fox-techniques/athena-recruitment-analytics
     - icon: fontawesome/brands/discord
