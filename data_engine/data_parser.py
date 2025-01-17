@@ -21,11 +21,18 @@ import os
 import pandas as pd
 from datetime import datetime
 
+from utils.performance import _log_execution_time
+
+import logging
+
+logger = logging.getLogger(__name__)
+
 # Define directories
 APPLICATIONS_DIR = "./data/job_applications"
 OUTPUT_DIR = "./data/output"
 
 
+@_log_execution_time
 def extract_job_details(dirname):
     """
     Extract job details (title, company, country, status) from a directory name.
@@ -72,6 +79,7 @@ def extract_job_details(dirname):
         return None
 
 
+@_log_execution_time
 def format_timestamp(timestamp):
     """
     Convert a Unix timestamp into a human-readable date-time format.
@@ -85,6 +93,7 @@ def format_timestamp(timestamp):
     return datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M:%S")
 
 
+@_log_execution_time
 def parse_job_application_directory(directory):
     """
     Parse a directory of job application folders to extract relevant details.

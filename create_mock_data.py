@@ -1,6 +1,8 @@
 import os
 import random
 
+from utils.performance import _log_execution_time
+
 # Lists of positions, companies, countries, and statuses
 positions = [
     "Analytics Engineer",

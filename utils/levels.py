@@ -1,6 +1,13 @@
 import re
 
+from utils.performance import _log_execution_time
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+@_log_execution_time
 def handle_1st_node_for_ir_levels(ir_levels):
     """
     Handle the special case for '1st Node', replacing it with an empty string
@@ -17,6 +24,7 @@ def handle_1st_node_for_ir_levels(ir_levels):
     return ir_levels
 
 
+@_log_execution_time
 def reorder_and_place_status_levels(ir_levels):
     """
     Reorder StatusLevel items by their numeric order and place them back in their original indices.

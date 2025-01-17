@@ -1,12 +1,19 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
-from src.control_panel import (
+from dashboard.control_panel import (
     description_card,
     generate_control_card,
     generate_stats_card,
 )
 
+from utils.performance import _log_execution_time
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+@_log_execution_time
 def generate_layout(processed_data_df, metrics, visualizations):
     """
     Generate the layout for the ATHENA dashboard.

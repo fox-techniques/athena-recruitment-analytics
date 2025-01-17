@@ -1,6 +1,6 @@
 from dash import Input, Output, State, callback_context
 
-from src.data_visualizations import (
+from dashboard.data_visualizations import (
     create_irene_sankey,
     create_treemap,
     create_bar_chart,

@@ -20,13 +20,20 @@ import pandas as pd
 import os
 import json
 
-from src.data_parser import parse_job_application_directory
+from data_engine.data_parser import parse_job_application_directory
+
+from utils.performance import _log_execution_time
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Directories for data and mappings
 MAPPING_DIR = os.getenv("MAPPING_DIR", "./data/mappings")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./data/output")
 
 
+@_log_execution_time
 def parse_and_load_data(applications_dir, output_dir):
     """
     Parse data from the application directory or load pre-parsed data from the output directory.
@@ -66,6 +73,7 @@ def parse_and_load_data(applications_dir, output_dir):
     return parsed_df
 
 
+@_log_execution_time
 def load_map_projections():
     """
     Load map projections from JSON file.
@@ -82,6 +90,7 @@ def load_map_projections():
     return map_projections
 
 
+@_log_execution_time
 def load_json_mappings():
     """
     Load mappings from JSON files for company-industry and position-field relationships.
@@ -104,6 +113,7 @@ def load_json_mappings():
     return company_industry_mapping, position_field_mapping
 
 
+@_log_execution_time
 def load_status_mapping():
     """
     Load the mapping of job application statuses from a JSON file.
@@ -119,6 +129,7 @@ def load_status_mapping():
     return status_mapping
 
 
+@_log_execution_time
 def load_countries_ISO(abbr_from: str = "alpha-2", abbr_to: str = "alpha-3"):
     """
     Load and map country codes between different ISO formats using a CSV file.
@@ -142,6 +153,7 @@ def load_countries_ISO(abbr_from: str = "alpha-2", abbr_to: str = "alpha-3"):
     return country_mapping
 
 
+@_log_execution_time
 def load_raw_data():
     """
     Load the raw applicants' data from a CSV file.

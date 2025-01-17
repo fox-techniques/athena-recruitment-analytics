@@ -27,23 +27,31 @@ import os
 from dash import Dash
 import dash_bootstrap_components as dbc
 
-from src.insights import get_overall_insights
-from src.data_loader import load_json_mappings, parse_and_load_data
-from src.data_generator import (
+from data_engine.data_loader import load_json_mappings, parse_and_load_data
+from data_engine.data_generator import (
     update_missing_company_industry,
     update_missing_position_field,
     add_industry_and_field,
     extend_status_levels,
 )
-from src.data_visualizations import overview_visualizations
+
+from dashboard.insights import get_overall_insights
+from dashboard.data_visualizations import overview_visualizations
 from pages.generate_layout import generate_layout
 from callbacks.update_figures import register_callbacks
+
+from utils.performance import _log_execution_time
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Environment Variables or Default Paths
 APPLICATIONS_DIR = os.getenv("APPLICATIONS_DIR", "./data/job_applications")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./data/output")
 
 
+@_log_execution_time
 def initialize_dash_app():
     """Initialize the Dash application with external styles and title."""
     app = Dash(
@@ -58,6 +66,7 @@ def initialize_dash_app():
     return app
 
 
+@_log_execution_time
 def load_and_prepare_data():
     """Load and process application data."""
     # Parse job applications and load mappings
@@ -82,6 +91,7 @@ def load_and_prepare_data():
     return extend_status_levels(updated_data_df)
 
 
+@_log_execution_time
 def main():
     """Main entry point for the Dash application."""
     # Initialize app

@@ -17,10 +17,17 @@ Functions:
 
 import plotly.express as px
 import plotly.graph_objects as go
-from src.data_loader import load_countries_ISO
+from data_engine.data_loader import load_countries_ISO
 import irene_sankey as irs
 
+from utils.performance import _log_execution_time
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+@_log_execution_time
 def create_irene_sankey(data, levels, title, color_template, font_color):
     """
     Generate a Irene-Sankey diagram for hierarchical flow data.
@@ -55,6 +62,7 @@ def create_irene_sankey(data, levels, title, color_template, font_color):
     return fig_irene_sankey
 
 
+@_log_execution_time
 def create_treemap(data, path, values, title, color, color_template, font_color):
     """
     Generate a treemap visualization for hierarchical data.
@@ -86,6 +94,7 @@ def create_treemap(data, path, values, title, color, color_template, font_color)
     return fig
 
 
+@_log_execution_time
 def create_bar_chart(
     data,
     x,
@@ -151,6 +160,7 @@ def create_bar_chart(
     return fig
 
 
+@_log_execution_time
 def create_choropleth(
     data,
     locations,
@@ -201,6 +211,7 @@ def create_choropleth(
     return fig
 
 
+@_log_execution_time
 def overview_visualizations(
     processed_data_df,
     color_template="none",

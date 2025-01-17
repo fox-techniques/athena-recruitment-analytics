@@ -1,3 +1,11 @@
+from utils.performance import _log_execution_time
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+@_log_execution_time
 def get_overall_insights(df):
     """
     Calculate key insights from applicants' DataFrame.

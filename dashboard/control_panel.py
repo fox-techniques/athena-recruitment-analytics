@@ -16,9 +16,16 @@ Functions:
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
-from src.data_loader import load_map_projections
+from data_engine.data_loader import load_map_projections
+
+from utils.performance import _log_execution_time
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
+@_log_execution_time
 def description_card():
     """
     Create a description card with the dashboard title and introductory text.
@@ -57,6 +64,7 @@ def description_card():
     )
 
 
+@_log_execution_time
 def generate_control_card(
     df,
     dropdown_ir_default_values=[
@@ -137,6 +145,7 @@ def generate_control_card(
     )
 
 
+@_log_execution_time
 def generate_stats_card(title, value, image_path):
     """
     Create a card for displaying a single statistic with an image.

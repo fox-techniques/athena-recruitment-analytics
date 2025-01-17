@@ -23,7 +23,13 @@ import json
 import re
 import numpy as np
 
-from src.data_loader import load_status_mapping
+from data_engine.data_loader import load_status_mapping
+
+from utils.performance import _log_execution_time
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Directory for mapping files
 MAPPING_DIR = "./data/mappings"
@@ -32,6 +38,7 @@ MISSING_ENTRIES_FILE = os.path.join(MAPPING_DIR, "missing_entries.log")
 PLACEHOLDER = "MISSING!!!"
 
 
+@_log_execution_time
 def log_missing_entry(entry_type, name):
     """
     Log missing entries to a file for later review.
@@ -45,6 +52,7 @@ def log_missing_entry(entry_type, name):
     print(f"Logged missing {entry_type.lower()}: '{name}' to {MISSING_ENTRIES_FILE}")
 
 
+@_log_execution_time
 def update_missing_company_industry(df, company_industry_mapping):
     """
     Update industries for companies missing in the company-industry mapping.
@@ -76,6 +84,7 @@ def update_missing_company_industry(df, company_industry_mapping):
     return updated_mapping
 
 
+@_log_execution_time
 def update_missing_position_field(df, position_field_mapping):
     """
     Update fields for positions missing in the position-field mapping.
@@ -102,6 +111,7 @@ def update_missing_position_field(df, position_field_mapping):
     return updated_mapping
 
 
+@_log_execution_time
 def add_industry_and_field(
     raw_data_df, company_industry_mapping, position_field_mapping
 ):
@@ -128,33 +138,10 @@ def add_industry_and_field(
     return processed_data_df
 
 
-# def add_suffix_to_cross_column_duplicates(df, columns, suffix="-x"):
-#     """
-#     Add suffixes to duplicate values across specified columns in the same row.
-
-#     Args:
-#         df (pd.DataFrame): Input DataFrame.
-#         columns (list): List of column names to check for duplicates.
-#         suffix (str): Suffix to append to duplicates.
-
-#     Returns:
-#         pd.DataFrame: DataFrame with updated values.
-#     """
-#     for idx, row in df.iterrows():
-#         seen = {}
-#         for col in columns:
-#             value = row[col]
-#             if value not in seen:
-#                 seen[value] = 1
-#             else:
-#                 seen[value] += 1
-#                 df.at[idx, col] = f"{value}{suffix}{seen[value]-1}"
-#     return df
-
-
+@_log_execution_time
 def add_suffix_to_cross_column_duplicates(df, columns, suffix="-x"):
     """
-    Efficiently add suffixes to duplicate values across specified columns in the same row.
+    Add suffixes to duplicate values across specified columns in the same row.
 
     Args:
         df (pd.DataFrame): Input DataFrame.
@@ -164,15 +151,19 @@ def add_suffix_to_cross_column_duplicates(df, columns, suffix="-x"):
     Returns:
         pd.DataFrame: DataFrame with updated values.
     """
-    df = df.copy()
-    for col in columns:
-        duplicate_counts = df.groupby(col).cumcount()  # Count occurrences of each value
-        df[col] = df[col] + duplicate_counts.where(
-            duplicate_counts > 0, f"{suffix}"
-        ).astype(str).replace(f"{suffix}0", "")
+    for idx, row in df.iterrows():
+        seen = {}
+        for col in columns:
+            value = row[col]
+            if value not in seen:
+                seen[value] = 1
+            else:
+                seen[value] += 1
+                df.at[idx, col] = f"{value}{suffix}{seen[value]-1}"
     return df
 
 
+@_log_execution_time
 def add_missing_values(df, columns, missing_fraction=0.1):
     """
     Randomly introduce missing values to specified columns in a DataFrame.
@@ -198,6 +189,7 @@ def add_missing_values(df, columns, missing_fraction=0.1):
     return df_copy
 
 
+@_log_execution_time
 def extend_status_levels(df, include_suffix_for=["Interview"]):
     """
     Expand application statuses into multiple levels as separate columns.
