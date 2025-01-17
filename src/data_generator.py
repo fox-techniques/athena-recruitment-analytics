@@ -128,9 +128,33 @@ def add_industry_and_field(
     return processed_data_df
 
 
+# def add_suffix_to_cross_column_duplicates(df, columns, suffix="-x"):
+#     """
+#     Add suffixes to duplicate values across specified columns in the same row.
+
+#     Args:
+#         df (pd.DataFrame): Input DataFrame.
+#         columns (list): List of column names to check for duplicates.
+#         suffix (str): Suffix to append to duplicates.
+
+#     Returns:
+#         pd.DataFrame: DataFrame with updated values.
+#     """
+#     for idx, row in df.iterrows():
+#         seen = {}
+#         for col in columns:
+#             value = row[col]
+#             if value not in seen:
+#                 seen[value] = 1
+#             else:
+#                 seen[value] += 1
+#                 df.at[idx, col] = f"{value}{suffix}{seen[value]-1}"
+#     return df
+
+
 def add_suffix_to_cross_column_duplicates(df, columns, suffix="-x"):
     """
-    Add suffixes to duplicate values across specified columns in the same row.
+    Efficiently add suffixes to duplicate values across specified columns in the same row.
 
     Args:
         df (pd.DataFrame): Input DataFrame.
@@ -140,15 +164,12 @@ def add_suffix_to_cross_column_duplicates(df, columns, suffix="-x"):
     Returns:
         pd.DataFrame: DataFrame with updated values.
     """
-    for idx, row in df.iterrows():
-        seen = {}
-        for col in columns:
-            value = row[col]
-            if value not in seen:
-                seen[value] = 1
-            else:
-                seen[value] += 1
-                df.at[idx, col] = f"{value}{suffix}{seen[value]-1}"
+    df = df.copy()
+    for col in columns:
+        duplicate_counts = df.groupby(col).cumcount()  # Count occurrences of each value
+        df[col] = df[col] + duplicate_counts.where(
+            duplicate_counts > 0, f"{suffix}"
+        ).astype(str).replace(f"{suffix}0", "")
     return df
 
 

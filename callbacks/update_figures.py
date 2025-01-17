@@ -7,7 +7,7 @@ from src.data_visualizations import (
     create_choropleth,
 )
 
-from src.utils import reorder_and_place_status_levels
+from utils.levels import reorder_and_place_status_levels
 
 
 def register_callbacks(app, df):

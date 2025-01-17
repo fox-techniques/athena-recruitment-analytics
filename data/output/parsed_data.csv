@@ -1,43 +1,43 @@
 Position,Company,Country,NumApplications,HasCover,Status,SubmissionTimestamp,LastUpdateTimestamp
-Chapter Lead,Eneco,UK,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Scientist,BMW,ES,1,True,IIIR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Architect,Microsoft,US,1,True,CR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Management Specialist,TU Delft,FR,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,Heineken,NL,1,True,ITIO,2024-11-22 09:49:56,2024-11-21 17:18:08
-Analytics Engineer,BMW,NL,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Architect,MAN,ES,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Platform Engineer Advanced,Deloitte,AT,1,True,IIIR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Chapter Lead,TU Delft,CH,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
-Cloud Architect,Deloitte,NL,1,True,CITIO,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Warehouse Engineer,ING,DE,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,Deloitte,CA,1,True,CITIO,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Management Specialist,ABN Amro,US,1,True,IIR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,Deloitte,DE,1,True,VR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Architect,Deloitte,US,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Warehouse Engineer,Roche,UK,1,True,IIIR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Business Analyst,Netflix,US,1,True,VIITO,2024-11-22 09:49:56,2024-11-21 17:18:08
-Business Analyst,BasicFit,AT,1,True,IIR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Warehouse Engineer,MAN,AT,1,True,IIIR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Artificial Intelligence,BMW,US,1,True,VR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Engineer,Roche,NL,1,True,VR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Chapter Lead,MAN,UK,1,True,CR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Management Specialist,Heineken,US,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Business Analyst,Heineken,DE,1,True,R,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Manager,HelloFresh,CH,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,Netflix,AT,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Manager,ING,UK,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,HelloFresh,AT,1,True,VR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Platform Engineer Advanced,ABN Amro,CA,1,True,VIITO,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Scientist and Process Mining,Microsoft,AT,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Analyst,Eneco,AT,1,True,VIITO,2024-11-22 09:49:56,2024-11-21 17:18:08
-Azure Data Engineer,Heineken,CH,1,True,I,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Warehouse Engineer,BMW,ES,1,True,IR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Cloud Engineer,MAN,NL,1,True,N,2024-11-22 09:49:56,2024-11-21 17:18:08
-Cloud Engineer,Deloitte,CH,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
-Cloud Engineer,BasicFit,AT,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Architect,TU Delft,CA,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Scientist,BasicFit,US,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
-Cloud Engineer,BasicFit,DE,1,True,IIR,2024-11-22 09:49:56,2024-11-21 17:18:08
-Cloud Architect,HelloFresh,CH,1,True,H,2024-11-22 09:49:56,2024-11-21 17:18:08
-Cloud Software Engineer,Netflix,UK,1,True,CITIO,2024-11-22 09:49:56,2024-11-21 17:18:08
-Data Analyst,ING,CA,1,True,G,2024-11-22 09:49:56,2024-11-21 17:18:08
+Climate Data,ABN Amro,CA,1,True,IR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Azure Data Engineer,ING,DE,1,True,IR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Architect,Roche,CH,1,True,R,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Warehouse Engineer,ABN Amro,CH,1,True,VIITO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Business Analyst,Netflix,DE,1,True,VIITO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Warehouse Engineer,Microsoft,FR,1,True,VR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Artificial Intelligence,MAN,CA,1,True,IIR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Manager,MAN,DE,1,True,IIR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Platform Engineer Advanced,ING,US,1,True,VIITO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Management Specialist,Deloitte,AT,1,True,G,2025-01-17 10:15:02,2025-01-17 10:15:02
+Climate Data,BasicFit,DE,1,True,IR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Management Specialist,Deloitte,CH,1,True,VR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Warehouse Engineer,ING,CH,1,True,R,2025-01-17 10:15:02,2025-01-17 10:15:02
+Analytics Engineer,Heineken,NL,1,True,CITIO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Business Analyst,Roche,DE,1,True,N,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Warehouse Engineer,Roche,CA,1,True,G,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Scientist and Process Mining,Microsoft,CH,1,True,VIITO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Azure Data Engineer,Microsoft,US,1,True,CITIO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Scientist,ING,NL,1,True,VIITO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Azure Data Engineer,HelloFresh,CA,1,True,CR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Warehouse Engineer,Deloitte,CA,1,True,R,2025-01-17 10:15:02,2025-01-17 10:15:02
+Business Analyst,HelloFresh,CA,1,True,G,2025-01-17 10:15:02,2025-01-17 10:15:02
+Azure Data Engineer,Heineken,ES,1,True,CITIO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Management Specialist,HelloFresh,AT,1,True,CITIO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Scientist and Process Mining,Eneco,ES,1,True,R,2025-01-17 10:15:02,2025-01-17 10:15:02
+Artificial Intelligence,TU Delft,AT,1,True,IR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Business Analyst,BasicFit,UK,1,True,N,2025-01-17 10:15:02,2025-01-17 10:15:02
+Chapter Lead,Deloitte,FR,1,True,R,2025-01-17 10:15:02,2025-01-17 10:15:02
+Azure Data Engineer,HelloFresh,DE,1,True,CR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Climate Data,ING,UK,1,True,CITIO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Warehouse Architect,HelloFresh,ES,1,True,VIITO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Warehouse Architect,MAN,US,1,True,IIR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Engineer,BasicFit,ES,1,True,CITIO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Analyst,ABN Amro,CA,1,True,G,2025-01-17 10:15:02,2025-01-17 10:15:02
+Chapter Lead,Roche,US,1,True,H,2025-01-17 10:15:02,2025-01-17 10:15:02
+Azure Data Engineer,Deloitte,CA,1,True,G,2025-01-17 10:15:02,2025-01-17 10:15:02
+Azure Data Engineer,TU Delft,UK,1,True,VIITO,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Platform Engineer Advanced,MAN,US,1,True,IIIR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Analytics Engineer,Netflix,UK,1,True,VR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Management Specialist,Heineken,UK,1,True,H,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Analyst,Heineken,FR,1,True,CR,2025-01-17 10:15:02,2025-01-17 10:15:02
+Data Manager,Netflix,DE,1,True,IIIR,2025-01-17 10:15:02,2025-01-17 10:15:02

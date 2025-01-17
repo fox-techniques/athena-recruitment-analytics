@@ -189,7 +189,7 @@ def generate_layout(processed_data_df, metrics, visualizations):
                             src="assets/logos/fox-techniques-long-logo-light.png",
                             className="footer-logo",
                         ),
-                        href="https://github.com/fox-techniques",
+                        href="https://www.fox-techniques.com",
                     ),
                 ],
                 className="footer-text",

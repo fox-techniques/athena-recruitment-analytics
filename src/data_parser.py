@@ -50,52 +50,25 @@ def extract_job_details(dirname):
     dirname = dirname.rsplit(".", 1)[0]
 
     try:
-        # Parse directory name with country and status
-        if ("[" in dirname and "]" in dirname) and (
-            "(" not in dirname and ")" not in dirname
-        ):
-            country_start = dirname.index("[")
-            country_end = dirname.index("]")
-            country_code = dirname[country_start + 1 : country_end].strip()
-            status = ""
-            company = dirname[:country_start].strip()
+        dirname = dirname.rsplit(".", 1)[0]
+        country_code = re.search(r"\[(.*?)\]", dirname)
+        status = re.search(r"\((.*?)\)", dirname)
+        job_and_company = re.split(
+            r" - ", re.sub(r"\[.*?\]|\(.*?\)", "", dirname).strip()
+        )
 
-        elif ("[" not in dirname and "]" not in dirname) and (
-            "(" in dirname and ")" in dirname
-        ):
-            country_code = "NL"
-            status_start = dirname.index("(")
-            status_end = dirname.index(")")
-            status = dirname[status_start + 1 : status_end].strip()
-            company = dirname[:status_start].strip()
+        if len(job_and_company) != 2:
+            raise ValueError(f"Invalid format for: {dirname}")
 
-        elif ("[" not in dirname and "]" not in dirname) and (
-            "(" not in dirname and ")" not in dirname
-        ):
-            country_code = "NL"
-            status = ""
-            company = dirname.strip()
-
-        else:
-            country_start = dirname.index("[")
-            country_end = dirname.index("]")
-            country_code = dirname[country_start + 1 : country_end].strip()
-            status_start = dirname.index("(")
-            status_end = dirname.index(")")
-            status = dirname[status_start + 1 : status_end].strip()
-            company = dirname[:country_start].strip()
-
-        # Extract job title and company
-        if " - " in company:
-            job_title, company = company.split(" - ", 1)
-        else:
-            print(f"Invalid dirname format (missing ' - '): {dirname}")
-            return None
-
-        return job_title.strip(), company.strip(), country_code, status.strip()
-
+        job_title, company = map(str.strip, job_and_company)
+        return (
+            job_title,
+            company,
+            country_code.group(1) if country_code else "NL",
+            status.group(1) if status else "",
+        )
     except Exception as e:
-        print(f"Error parsing directory name '{dirname}': {e}")
+        print(f"Error extracting details from '{dirname}': {e}")
         return None
 
 

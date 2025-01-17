@@ -91,17 +91,15 @@ def load_json_mappings():
             - company_industry_mapping (dict): Mapping of companies to industries.
             - position_field_mapping (dict): Mapping of positions to fields.
     """
-    company_industry_mapping_filepath = os.path.join(
-        MAPPING_DIR, "company_industry.json"
-    )
+    try:
+        with open(os.path.join(MAPPING_DIR, "company_industry.json"), "r") as file:
+            company_industry_mapping = json.load(file)
+        with open(os.path.join(MAPPING_DIR, "position_field.json"), "r") as file:
+            position_field_mapping = json.load(file)
 
-    with open(company_industry_mapping_filepath, "r") as file:
-        company_industry_mapping = json.load(file)
-
-    position_field_mapping_filepath = os.path.join(MAPPING_DIR, "position_field.json")
-
-    with open(position_field_mapping_filepath, "r") as file:
-        position_field_mapping = json.load(file)
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+        return {}, {}
 
     return company_industry_mapping, position_field_mapping
 

@@ -162,4 +162,5 @@ cython_debug/
 #.idea/
 
 /data/job_applications*
+/site
 try_me.py
