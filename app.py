@@ -27,13 +27,7 @@ import os
 from dash import Dash
 import dash_bootstrap_components as dbc
 
-from data_engine.data_loader import load_json_mappings, parse_and_load_data
-from data_engine.data_generator import (
-    update_missing_company_industry,
-    update_missing_position_field,
-    add_industry_and_field,
-    extend_status_levels,
-)
+from data_engine.data_loader import load_and_prepare_data
 
 from dashboard.insights import get_overall_insights
 from dashboard.data_visualizations import overview_visualizations
@@ -62,33 +56,8 @@ def initialize_dash_app():
         ],
         title="ATHENA - Recruitment Analytics",
     )
-    app.server = app.server  # Flask server
+    app.server = app.server
     return app
-
-
-@_log_execution_time
-def load_and_prepare_data():
-    """Load and process application data."""
-    # Parse job applications and load mappings
-    parsed_df = parse_and_load_data(APPLICATIONS_DIR, OUTPUT_DIR)
-    company_industry_mapping, position_field_mapping = load_json_mappings()
-
-    # Enrich and update data
-    enriched_df = add_industry_and_field(
-        parsed_df, company_industry_mapping, position_field_mapping
-    )
-    updated_company_industry_mapping = update_missing_company_industry(
-        enriched_df, company_industry_mapping
-    )
-    updated_position_field_mapping = update_missing_position_field(
-        enriched_df, position_field_mapping
-    )
-    updated_data_df = add_industry_and_field(
-        enriched_df,
-        updated_company_industry_mapping,
-        updated_position_field_mapping,
-    )
-    return extend_status_levels(updated_data_df)
 
 
 @_log_execution_time

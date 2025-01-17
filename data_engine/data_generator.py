@@ -23,8 +23,6 @@ import json
 import re
 import numpy as np
 
-from data_engine.data_loader import load_status_mapping
-
 from utils.performance import _log_execution_time
 
 import logging
@@ -187,35 +185,3 @@ def add_missing_values(df, columns, missing_fraction=0.1):
             missing_indices = np.random.choice(df_copy.index, n_missing, replace=False)
             df_copy.loc[missing_indices, col] = np.nan
     return df_copy
-
-
-@_log_execution_time
-def extend_status_levels(df, include_suffix_for=["Interview"]):
-    """
-    Expand application statuses into multiple levels as separate columns.
-
-    Args:
-        df (pd.DataFrame): DataFrame containing a "Status" column.
-        include_suffix_for (list): List of statuses to append suffixes.
-
-    Returns:
-        pd.DataFrame: DataFrame with expanded status levels.
-    """
-    mapping = load_status_mapping()
-    max_levels = df["Status"].dropna().apply(len).max() + 1
-
-    for i in range(max_levels):
-        df[f"StatusLevel{i}"] = None
-
-    for idx, row in df.iterrows():
-        status_string = row["Status"] if isinstance(row["Status"], str) else ""
-        levels = (
-            ["Submitted"] + [mapping.get(char, "NA") for char in status_string]
-            if status_string
-            else ["Submitted", "No Reply"]
-        )
-        for i, level in enumerate(levels):
-            df.at[idx, f"StatusLevel{i}"] = (
-                f"{level}-R{i}" if level in include_suffix_for else level
-            )
-    return df

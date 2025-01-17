@@ -1,25 +1,35 @@
 """
-Module for Loading Applicants Data and Mappings
+Module for Loading and Preparing Applicants Data and Mappings
 
 This module provides utility functions to load various datasets and mappings required
 for the Application tracking  analytics. The functions handle JSON mappings, CSV files,
 and raw jobhunt data to facilitate easy data loading and processing.
 
 Directories:
+    - APPLICATIONS_DIR: Directory containing job application folders.
     - MAPPING_DIR: Directory containing JSON and CSV mapping files.
     - OUTPUT_DIR: Directory containing processed and raw jobhunt data.
 
 Functions:
+    - parse_and_load_data: Parse data from the application directory or load pre-parsed data from the output directory.
+    - load_map_projections: Load map projections from JSON file.
     - load_json_mappings: Load mappings between companies and industries, and positions and fields.
     - load_status_mapping: Load the mapping of job application statuses.
+    - extend_status_levels: Expand application statuses into multiple levels as separate columns.
     - load_countries_ISO: Load and map country codes between different ISO formats.
     - load_raw_data: Load the raw applicants' data from a CSV file.
+    - load_and_prepare_data: Load and process application data.
 """
 
 import pandas as pd
 import os
 import json
 
+from data_engine.data_generator import (
+    update_missing_company_industry,
+    update_missing_position_field,
+    add_industry_and_field,
+)
 from data_engine.data_parser import parse_job_application_directory
 
 from utils.performance import _log_execution_time
@@ -29,6 +39,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Directories for data and mappings
+APPLICATIONS_DIR = os.getenv("APPLICATIONS_DIR", "./data/job_applications")
 MAPPING_DIR = os.getenv("MAPPING_DIR", "./data/mappings")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./data/output")
 
@@ -130,6 +141,38 @@ def load_status_mapping():
 
 
 @_log_execution_time
+def extend_status_levels(df, include_suffix_for=["Interview"]):
+    """
+    Expand application statuses into multiple levels as separate columns.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing a "Status" column.
+        include_suffix_for (list): List of statuses to append suffixes.
+
+    Returns:
+        pd.DataFrame: DataFrame with expanded status levels.
+    """
+    mapping = load_status_mapping()
+    max_levels = df["Status"].dropna().apply(len).max() + 1
+
+    for i in range(max_levels):
+        df[f"StatusLevel{i}"] = None
+
+    for idx, row in df.iterrows():
+        status_string = row["Status"] if isinstance(row["Status"], str) else ""
+        levels = (
+            ["Submitted"] + [mapping.get(char, "NA") for char in status_string]
+            if status_string
+            else ["Submitted", "No Reply"]
+        )
+        for i, level in enumerate(levels):
+            df.at[idx, f"StatusLevel{i}"] = (
+                f"{level}-R{i}" if level in include_suffix_for else level
+            )
+    return df
+
+
+@_log_execution_time
 def load_countries_ISO(abbr_from: str = "alpha-2", abbr_to: str = "alpha-3"):
     """
     Load and map country codes between different ISO formats using a CSV file.
@@ -167,3 +210,28 @@ def load_raw_data():
     raw_df = pd.read_csv(raw_data_filepath)
 
     return raw_df
+
+
+@_log_execution_time
+def load_and_prepare_data():
+    """Load and process application data."""
+    # Parse job applications and load mappings
+    parsed_df = parse_and_load_data(APPLICATIONS_DIR, OUTPUT_DIR)
+    company_industry_mapping, position_field_mapping = load_json_mappings()
+
+    # Enrich and update data
+    enriched_df = add_industry_and_field(
+        parsed_df, company_industry_mapping, position_field_mapping
+    )
+    updated_company_industry_mapping = update_missing_company_industry(
+        enriched_df, company_industry_mapping
+    )
+    updated_position_field_mapping = update_missing_position_field(
+        enriched_df, position_field_mapping
+    )
+    updated_data_df = add_industry_and_field(
+        enriched_df,
+        updated_company_industry_mapping,
+        updated_position_field_mapping,
+    )
+    return extend_status_levels(updated_data_df)
