@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add weekly changelog generation workflow and initial changelog file ([a0628cf](https://github.com/fox-techniques/athena-recruitment-analytics/commit/a0628cf9e31c9eb371c8c812a144bed0feacd773) by A Nova).
 - Add performance logging and restructure dashboard components; migrate insights functionality to dashboard module ([e22b859](https://github.com/fox-techniques/athena-recruitment-analytics/commit/e22b85936d49e845a0ae6597deb36ac5b19ec840) by A Nova).
 
+### Removed
+
+- Remove weekly changelog generation workflow and update changelog file ([e291617](https://github.com/fox-techniques/athena-recruitment-analytics/commit/e2916179e67e3fe80c8ab5f6609ba99e74df4c40) by A Nova).
+
 <!-- insertion marker -->
 ## [v1.1.4](https://github.com/fox-techniques/athena-recruitment-analytics/releases/tag/v1.1.4) - 2025-01-09
 
