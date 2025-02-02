@@ -23,7 +23,7 @@ For installation guides and troubleshooting, refer to the [RealPython](https://r
   [virtual environment]: https://realpython.com/what-is-pip/#using-pip-in-a-python-virtual-environment
   [Using Python's pip to Manage Your Projects' Dependencies]: https://realpython.com/what-is-pip/
 
-## 🐙 GitHub Repository
+## 🐙 Git
 
 
 **Step 1.** Open your terminal or command prompt.
