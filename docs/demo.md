@@ -1,6 +1,6 @@
-# Demo 
+# 🎥 Demo 
 
-## A Glance on ATHENA
+## 🎬 A Glance on ATHENA
 
 
 === "Screenshot 1"
@@ -16,11 +16,11 @@
     ![ATHENA Screenshot](assets/screenshot-03-demo.png){ width=800 }
 
 
-## How to Use
+## 🚀 How to Use
 
-ATHENA expects job applications to be organized in a specific folder structure and file naming convention. This guide will help you structure your data correctly to ensure smooth parsing and analytics.
+**ATHENA** expects job applications to be organized in a specific folder structure and file naming convention. This guide will help you structure your data correctly to ensure smooth parsing and analytics.
 
-### Folder Structure
+### 📂 Folder Structure
 
 Organize your data in a folder structure with the following naming format for each application:
 
@@ -39,7 +39,7 @@ Example of the folder structure:
 
 ![ATHENA Application folder structure](assets/data-directories-prep.png)
 
-### Status Mapping
+### 🔀 Status Mapping
 
 The status is a combination of one or more of the following codes:
 
@@ -60,7 +60,7 @@ The status is a combination of one or more of the following codes:
 
 Status mapping is located in `/data/mappings/status.json`
 
-### Run the ATHENA Dashboard
+### 🏁 Run the ATHENA Dashboard
 
 Start the dashboard application:
 

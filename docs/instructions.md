@@ -1,10 +1,17 @@
-# Instructions 
+# 📥 Instructions 
 
-Follow these steps to clone the repository, set up the environment, and run the ATHENA dashboard.
+Follow these steps to clone the repository, set up the environment, and run the **ATHENA** dashboard.
 
 **Prerequisites:**
 
-- Python 3.10 or higher
+- 🐍 Python 3.10+
+
+Ensure you have **Python 3.10+** installed. If not, download and install it from the [official Python website](https://www.python.org/downloads/). Check your version:
+
+```bash
+python --version
+```
+For installation guides and troubleshooting, refer to the [RealPython](https://realpython.com/installing-python/) documentation.
 
 !!! tip
 
@@ -16,12 +23,12 @@ Follow these steps to clone the repository, set up the environment, and run the 
   [virtual environment]: https://realpython.com/what-is-pip/#using-pip-in-a-python-virtual-environment
   [Using Python's pip to Manage Your Projects' Dependencies]: https://realpython.com/what-is-pip/
 
-## Clone GIT Repository
+## 🐙 GitHub Repository
 
 
 **Step 1.** Open your terminal or command prompt.
 
-**Step 2.** Clone the Athena repository from GitHub:
+**Step 2.** Clone the **ATHENA** repository from GitHub:
 
 ```bash
 git clone https://github.com/your-repo/athena-recruitment-analytics.git
@@ -33,7 +40,7 @@ git clone https://github.com/your-repo/athena-recruitment-analytics.git
 cd athena-recruitment-analytics
 ```
 
-## Set Up a Virtual Environment
+## 📦 Package manager
 
 === "pip"
 
@@ -103,7 +110,7 @@ cd athena-recruitment-analytics
     poetry update
     ```
 
-**Step 8.** Run the ATHENA Dashboard
+**Step 8.** Run the **ATHENA** Dashboard
 
 Start the dashboard application:
 
