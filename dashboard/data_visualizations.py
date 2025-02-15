@@ -245,13 +245,18 @@ def overview_visualizations(
     )
 
     # Bar Chart: Top Fields
+    # Compute top 10 fields
     top_fields = (
         processed_data_df["Field"].value_counts().head(10).reset_index(name="count")
     )
-    total_count = top_fields["count"].sum()
-    top_fields["percentage_and_count"] = (top_fields["count"] / total_count).apply(
-        lambda x: f"{x:.2f}%"
-    ) + top_fields["count"].apply(lambda x: f" ({x})")
+
+    # Compute total applications count from the full dataset
+    total_count = processed_data_df["Field"].value_counts().sum()
+
+    # Create percentage representation
+    top_fields["percentage_and_count"] = (
+        top_fields["count"] / total_count * 100
+    ).apply(lambda x: f"{x:.2f}%") + top_fields["count"].apply(lambda x: f" ({x})")
 
     fig_fields = create_bar_chart(
         data=top_fields,
@@ -291,7 +296,7 @@ def overview_visualizations(
     fig_irene_sankey = create_irene_sankey(
         data=processed_data_df,
         levels=["", "Country", "Field"],
-        title="Irene-Sankey Flow Diagram",
+        title="IRENE-Sankey Flow Diagram",
         color_template="plotly",
         font_color=font_color,
     )
