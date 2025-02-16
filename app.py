@@ -43,6 +43,8 @@ logger = logging.getLogger(__name__)
 # Environment Variables or Default Paths
 APPLICATIONS_DIR = os.getenv("APPLICATIONS_DIR", "./data/job_applications")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./data/output")
+DASH_HOST = os.getenv("DASH_HOST", "0.0.0.0")
+DASH_PORT = int(os.getenv("DASH_PORT", "8050"))
 
 
 @_log_execution_time
@@ -78,7 +80,7 @@ def main():
     register_callbacks(app, extended_data_df)
 
     # Run server
-    app.run_server(host="0.0.0.0", port=8050)
+    app.run_server(host=DASH_HOST, port=DASH_PORT)
 
 
 if __name__ == "__main__":
