@@ -24,6 +24,7 @@ Modules Used:
 """
 
 import os
+from dotenv import load_dotenv
 from dash import Dash
 import dash_bootstrap_components as dbc
 
@@ -40,11 +41,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
+# Load environment variables from .env file
+load_dotenv()
+
 # Environment Variables or Default Paths
 APPLICATIONS_DIR = os.getenv("APPLICATIONS_DIR", "./data/job_applications")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "./data/output")
-DASH_HOST = os.getenv("DASH_HOST", "0.0.0.0")
-DASH_PORT = int(os.getenv("DASH_PORT", "8050"))
+DASH_HOST = os.getenv("DASH_HOST")
+DASH_PORT = int(os.getenv("DASH_PORT"))
 
 
 @_log_execution_time

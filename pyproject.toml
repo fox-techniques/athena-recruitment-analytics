@@ -14,6 +14,7 @@ pandas = "^2.2.3"
 numpy = "^2.1.3"
 irene-sankey = "^1.1.1"
 mkdocs-material = "^9.5.46"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
