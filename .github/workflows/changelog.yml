@@ -13,6 +13,8 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
 jobs:
   changelog:
     runs-on: ubuntu-latest
@@ -42,4 +44,3 @@ jobs:
           git add CHANGELOG.md
           git diff --cached --quiet || git commit -m "Update changelog for ${{ github.ref_name }}"
           git push
-          
