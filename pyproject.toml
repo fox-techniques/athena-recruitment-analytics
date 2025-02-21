@@ -17,6 +17,14 @@ mkdocs-material = "^9.5.46"
 python-dotenv = "^1.0.1"
 
 
+[tool.poetry.group.dev.dependencies]
+towncrier = "^24.8.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.towncrier]
+package = "athena-recruitment-analytics"
+directory = "newsfragments"
+filename = "CHANGELOG.md"

@@ -1,32 +1,34 @@
-# Use a lightweight Python image
-FROM python:3.10-slim
+# 🐍 Use an official lightweight Python image
+FROM python:3.11-alpine AS runtime
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set working directory
+# Set working directory inside the container
 WORKDIR /app
 
-# Install system dependencies for Dash app
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    build-essential \
-    libpq-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Install only essential runtime dependencies
+RUN apk add --no-cache libffi openssl curl
 
-# Copy the requirements file first for caching
-COPY requirements.txt .
+# Install a minimal version of Poetry (binary only) & ensure it's in PATH
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    ln -s /root/.local/bin/poetry /usr/local/bin/poetry
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy only necessary files for dependency resolution
+COPY pyproject.toml poetry.lock* /app/
 
-# Copy the rest of the application code
-COPY . .
+# Install dependencies using Poetry (EXCLUDING dev, test, and docs)
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-root --without dev
 
-# Expose the Dash default port
+# Copy the actual application source code
+COPY . /app
+
+# Ensure logs are stored in the correct location
+RUN mkdir -p /var/log/athena && chmod -R 777 /var/log/athena
+
+# Expose Dash port (8050)
 EXPOSE 8050
 
-# Command to run the Dash app
+# Set environment to container mode
+ENV ENVIRONMENT=production
+
+# 🏁 Start the ATHENA Dash application
 CMD ["python", "app.py"]
