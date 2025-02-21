@@ -37,23 +37,21 @@ jobs:
             -e GITHUB_TOKEN=${{ secrets.CHANGELOG_TOKEN }} \
             -v ${{ github.workspace }}:/app \
             changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }}
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
       
       - name: Debug Git Changes
         run: |
           git status
           git diff --staged
 
-      - name: Create & Push Changelog Branch
+      - name: Push changes
         run: |
-          git checkout -b update-changelog-${{ github.run_id }}
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
           git add CHANGELOG.md
           git diff --cached --quiet || git commit -m "Update changelog for ${{ github.ref_name }}"
-          git push origin update-changelog-${{ github.run_id }}
+          git push https://$GH_TOKEN@github.com/fox-techniques/athena-recruitment-analytics.git update-changelog-${{ github.run_id }}
+        env:
+          GH_TOKEN: ${{ secrets.CHANGELOG_TOKEN }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f
