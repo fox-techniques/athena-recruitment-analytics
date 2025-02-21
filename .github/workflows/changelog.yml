@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false  
 
       - name: Build Changelog Docker Image
         run: docker build -t changelog-generator -f Dockerfile.changelog .
@@ -28,19 +30,33 @@ jobs:
       - name: Generate Changelog
         run: |
           docker run --rm \
-            -e GITHUB_TOKEN=${{ secrets.CHANGELOG_TOKEN }} \
+            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
             -v ${{ github.workspace }}:/app \
             changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }}
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+      
       - name: Debug Git Changes
         run: |
           git status
           git diff --staged
 
-      - name: Commit & Push Changelog
+      - name: Create & Push Changelog Branch
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git checkout -b update-changelog-${{ github.run_id }}
           git add CHANGELOG.md
           git diff --cached --quiet || git commit -m "Update changelog for ${{ github.ref_name }}"
-          git push
+          git push origin update-changelog-${{ github.run_id }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update-changelog-${{ github.run_id }}
+          base: main
+          title: "Update Changelog for ${{ github.ref_name }}"
+          body: "This pull request updates the changelog for release ${{ github.ref_name }}."
+          labels: "changelog, automated"
