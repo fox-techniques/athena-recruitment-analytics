@@ -30,7 +30,7 @@ jobs:
       - name: Generate Changelog
         run: |
           docker run --rm \
-            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            -e GITHUB_TOKEN=${{ secrets.CHANGELOG_TOKEN }} \
             -v ${{ github.workspace }}:/app \
             changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }}
 
@@ -54,7 +54,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.CHANGELOG_TOKEN }}
           branch: update-changelog-${{ github.run_id }}
           base: main
           title: "Update Changelog for ${{ github.ref_name }}"
