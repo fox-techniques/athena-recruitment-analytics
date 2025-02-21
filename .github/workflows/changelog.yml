@@ -47,6 +47,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
+          git checkout -b update-changelog-${{ github.run_id }}
           git add CHANGELOG.md
           git diff --cached --quiet || git commit -m "Update changelog for ${{ github.ref_name }}"
           git push https://$GH_TOKEN@github.com/fox-techniques/athena-recruitment-analytics.git update-changelog-${{ github.run_id }}
