@@ -15,6 +15,7 @@ Functions:
 
 from dash import html, dcc
 import dash_bootstrap_components as dbc
+import re
 
 from data_engine.data_loader import load_map_projections
 
@@ -65,24 +66,12 @@ def description_card():
 
 
 @_log_execution_time
-def generate_control_card(
-    df,
-    dropdown_ir_default_values=[
-        "1st Node",
-        "Field",
-        "StatusLevel1",
-        "StatusLevel2",
-        "StatusLevel3",
-        "StatusLevel4",
-        "StatusLevel5",
-    ],
-):
+def generate_control_card(df):
     """
     Create a control panel for filtering data visualizations.
 
     Args:
         df (DataFrame): DataFrame containing data for dropdown options.
-        dropdown_ir_default_values (list): Default levels for the dropdown selection.
 
     Returns:
         html.Div: A Div containing the control panel for data visualizations.
@@ -91,9 +80,24 @@ def generate_control_card(
     countries = df["Country"].unique()
     columns_to_exclude_regex = r"Position|Num|Has|Timestamp"
 
-    # Filter levels and add "All Records" mapped to ""
+    # find columns that match your pattern, e.g. StatusLevel\d+
     possible_ir_levels = df.columns[~df.columns.str.contains(columns_to_exclude_regex)]
+
+    # Sort the status levels numerically
+    # (If you want them to appear in the dropdown in order)
+    def sort_numeric_status(col):
+        match = re.search(r"StatusLevel(\d+)", col)
+        return int(match.group(1)) if match else -1
+
+    possible_ir_levels = sorted(possible_ir_levels, key=sort_numeric_status)
     dropdown_options = ["1st Node"] + [col for col in possible_ir_levels]
+
+    # Find all status-level columns
+    status_cols = [col for col in df.columns if col.startswith("StatusLevel")]
+    # Exclude StatusLevel0
+    status_cols = [col for col in status_cols if col != "StatusLevel0"]
+
+    default_dropdown_options = ["1st Node", "Field"] + status_cols
 
     globe_list = load_map_projections()
 
@@ -101,11 +105,11 @@ def generate_control_card(
         id="control-card",
         children=[
             html.Br(),
-            html.H6("Irene-Sankey Levels"),
+            html.H6("IRENE-Sankey Levels"),
             dcc.Dropdown(
                 id="ir-level-select",
                 options=dropdown_options,
-                value=dropdown_ir_default_values,
+                value=default_dropdown_options,
                 multi=True,
                 className="dark-dropdown",
             ),

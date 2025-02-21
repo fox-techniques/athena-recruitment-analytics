@@ -8,42 +8,25 @@ This module provides functions to generate visualizations for applicants' data, 
 - Sankey diagrams for hierarchical relationships.
 
 Functions:
-    - create_irene_sankey: Generate an Irene-Sankey diagram.
+    - create_irene_sankey: Generate an IRENE-Sankey diagram.
     - create_treemap: Generate a treemap visualization.
     - create_bar_chart: Generate a bar chart visualization.
     - create_choropleth: Generate a choropleth map visualization.
-    - overview_visualizations: Generate all overview visualizations (treemap, bar chart, choropleth, and Irene-Sankey diagram).
+    - generate_figures: Generate the four main overview visualizations (Treemap, Bar, Choropleth, IRENE-Sankey).
 """
 
 import plotly.express as px
 import plotly.graph_objects as go
 from data_engine.data_loader import load_countries_ISO
 import irene_sankey as irs
-
-from utils.performance import _log_execution_time
-
-import logging
-
-logger = logging.getLogger(__name__)
+from utils.levels import reorder_and_place_status_levels
 
 
-@_log_execution_time
 def create_irene_sankey(data, levels, title, color_template, font_color):
     """
-    Generate a Irene-Sankey diagram for hierarchical flow data.
-
-    Args:
-        data (pd.DataFrame): DataFrame containing the flow data.
-        levels (list of str): List of columns in the DataFrame representing levels of hierarchy.
-            e.g. ["", "Country", "Field"]
-        title (str): Title of the Irene-Sankey diagram.
-        color_template (str): Plotly template to use for styling.
-        font_color (str): Color of the text in the visualization.
-
-    Returns:
-        plotly.graph_objects.Figure: Irene-Sankey diagram visualization.
+    Generate an IRENE-Sankey diagram for hierarchical flow data.
     """
-    # Generate the flow data using Irene-Sankey utilities
+    # Generate the flow data using IRENE-Sankey utilities
     flow_df, node_map, link = irs.traverse_sankey_flow(
         data, levels, head_node_label="Applications"
     )
@@ -62,22 +45,9 @@ def create_irene_sankey(data, levels, title, color_template, font_color):
     return fig_irene_sankey
 
 
-@_log_execution_time
 def create_treemap(data, path, values, title, color, color_template, font_color):
     """
     Generate a treemap visualization for hierarchical data.
-
-    Args:
-        data (pd.DataFrame): Data to visualize.
-        path (list): List of columns defining the hierarchy.
-        values (str): Column name containing values to aggregate.
-        title (str): Title of the treemap.
-        color (str): Column name used for coloring the tiles.
-        color_template (str): Plotly template to use for styling.
-        font_color (str): Color of the text in the visualization.
-
-    Returns:
-        plotly.graph_objects.Figure: Treemap visualization.
     """
     fig = px.treemap(
         data,
@@ -89,12 +59,11 @@ def create_treemap(data, path, values, title, color, color_template, font_color)
     fig.update_layout(
         template=color_template,
         font=dict(color=font_color),
+        plot_bgcolor="black",
     )
-    fig.update_layout(plot_bgcolor="black")
     return fig
 
 
-@_log_execution_time
 def create_bar_chart(
     data,
     x,
@@ -110,22 +79,6 @@ def create_bar_chart(
 ):
     """
     Generate a bar chart visualization for categorical data.
-
-    Args:
-        data (pd.DataFrame): Data to visualize.
-        x (str): Column name for the x-axis.
-        y (str): Column name for the y-axis.
-        orientation (str): Orientation of the bar chart ("h" for horizontal, "v" for vertical).
-        color (str): Column name used for coloring the bars.
-        text (str): Column name for text annotations on the bars.
-        title (str): Title of the bar chart.
-        labels (dict): Custom axis labels as a dictionary.
-        color_scale (str): Color scale for continuous data.
-        color_template (str): Plotly template to use for styling.
-        font_color (str): Color of the text in the visualization.
-
-    Returns:
-        plotly.graph_objects.Figure: Bar chart visualization.
     """
     fig = px.bar(
         data,
@@ -150,17 +103,11 @@ def create_bar_chart(
         ),
         template=color_template,
         font=dict(color=font_color),
-        margin=dict(
-            l=100,  # Left margin to accommodate long y-axis labels
-            r=20,  # Right margin
-            t=50,  # Top margin
-            b=50,  # Bottom margin
-        ),
+        margin=dict(l=100, r=20, t=50, b=50),
     )
     return fig
 
 
-@_log_execution_time
 def create_choropleth(
     data,
     locations,
@@ -173,29 +120,13 @@ def create_choropleth(
 ):
     """
     Generate a choropleth map for geographic data.
-
-    Args:
-        data (pd.DataFrame): Data to visualize.
-        locations (str): Column name containing location codes (e.g., country codes).
-        hover_name (str): Column name for hover text.
-        title (str): Title of the choropleth map.
-        projection (str): Map projection style (e.g., "natural earth", "orthographic").
-        color_scale (str): Color scale for continuous data.
-        color_template (str): Plotly template to use for styling.
-        font_color (str): Color of the text in the visualization.
-
-    Returns:
-        plotly.graph_objects.Figure: Choropleth map visualization.
     """
-
-    top_countries = data["Country"].value_counts().head(30).reset_index(name="count")
-    top_countries.rename(columns={"index": "Country"}, inplace=True)
-
     country_mapping = load_countries_ISO()
-    top_countries["Country"] = top_countries["Country"].map(country_mapping)
+    # Convert the top 30 countries to alpha-3 codes if needed:
+    data["Country"] = data["Country"].map(country_mapping)
 
     fig = px.choropleth(
-        top_countries,
+        data,
         locations=locations,
         color="count",
         hover_name=hover_name,
@@ -211,31 +142,27 @@ def create_choropleth(
     return fig
 
 
-@_log_execution_time
-def overview_visualizations(
-    processed_data_df,
+def generate_figures(
+    df,
+    sankey_levels,
+    map_projection="natural earth1",
     color_template="none",
     font_color="#14213d",
-    map_projection="natural earth1",
 ):
     """
-    Generate all overview visualizations for the recruitment dataset.
+    Generate the four main figures:
+        - Treemap (Top Industries)
+        - Bar Chart (Top Fields)
+        - Choropleth (Top Countries)
+        - IRENE-Sankey Diagram
 
-    Args:
-        processed_data_df (pd.DataFrame): Processed applicants' data.
-        color_template (str): Plotly template to use for styling (default: "none").
-        font_color (str): Color of the text in all visualizations (default: "#14213d").
-        map_projection (str): Map projection style (default: "natural earth").
-
-    Returns:
-        tuple: A tuple of Plotly figures (treemap, bar chart, choropleth, Irene-Sankey diagram).
+    This function can be used both on the initial page load (with defaults)
+    and in the callback (with updated user selections).
     """
-    # Treemap: Top Industries
-    top_industries = (
-        processed_data_df["Industry"].value_counts().reset_index(name="count")
-    )
+    # 1) TREEMAP: Top Industries
+    top_industries = df["Industry"].value_counts().reset_index(name="count")
     fig_industries = create_treemap(
-        top_industries,
+        data=top_industries,
         path=["Industry"],
         values="count",
         title="Top Industries",
@@ -244,20 +171,12 @@ def overview_visualizations(
         font_color=font_color,
     )
 
-    # Bar Chart: Top Fields
-    # Compute top 10 fields
-    top_fields = (
-        processed_data_df["Field"].value_counts().head(10).reset_index(name="count")
-    )
-
-    # Compute total applications count from the full dataset
-    total_count = processed_data_df["Field"].value_counts().sum()
-
-    # Create percentage representation
-    top_fields["percentage_and_count"] = (
-        top_fields["count"] / total_count * 100
-    ).apply(lambda x: f"{x:.2f}%") + top_fields["count"].apply(lambda x: f" ({x})")
-
+    # 2) BAR CHART: Top Fields
+    top_fields = df["Field"].value_counts().head(10).reset_index(name="count")
+    total_count = top_fields["count"].sum()
+    top_fields["percentage_and_count"] = (top_fields["count"] / total_count).apply(
+        lambda x: f"{x:.2f}%"
+    ) + top_fields["count"].apply(lambda x: f" ({x})")
     fig_fields = create_bar_chart(
         data=top_fields,
         x="count",
@@ -272,15 +191,9 @@ def overview_visualizations(
         font_color=font_color,
     )
 
-    # Choropleth: Top Countries
-    top_countries = (
-        processed_data_df["Country"].value_counts().head(30).reset_index(name="count")
-    )
+    # 3) CHOROPLETH: Top Countries (limit to top 30)
+    top_countries = df["Country"].value_counts().head(30).reset_index(name="count")
     top_countries.rename(columns={"index": "Country"}, inplace=True)
-
-    country_mapping = load_countries_ISO()
-    top_countries["Country"] = top_countries["Country"].map(country_mapping)
-
     fig_choropleth = create_choropleth(
         data=top_countries,
         locations="Country",
@@ -292,13 +205,16 @@ def overview_visualizations(
         font_color=font_color,
     )
 
-    # Sankey Diagram
-    fig_irene_sankey = create_irene_sankey(
-        data=processed_data_df,
-        levels=["", "Country", "Field"],
-        title="IRENE-Sankey Flow Diagram",
-        color_template="plotly",
+    # 4) IRENE-SANKEY
+    # reorder "StatusLevelX" if needed
+    modified_levels = reorder_and_place_status_levels(sankey_levels)
+    fig_sankey = create_irene_sankey(
+        data=df,
+        levels=modified_levels,
+        title="IRENE-Sankey Diagram",
+        color_template="plotly",  # use "plotly" or color_template as you prefer
         font_color=font_color,
     )
 
-    return fig_industries, fig_fields, fig_choropleth, fig_irene_sankey
+    # Return them in the order expected by generate_layout: (industries, fields, choropleth, sankey)
+    return fig_industries, fig_fields, fig_choropleth, fig_sankey

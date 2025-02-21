@@ -1,13 +1,5 @@
 from dash import Input, Output, State, callback_context
-
-from dashboard.data_visualizations import (
-    create_irene_sankey,
-    create_treemap,
-    create_bar_chart,
-    create_choropleth,
-)
-
-from utils.levels import reorder_and_place_status_levels
+from dashboard.data_visualizations import generate_figures
 
 
 def register_callbacks(app, df):
@@ -16,6 +8,7 @@ def register_callbacks(app, df):
             Output("ir-level-select", "value"),
             Output("country-select", "value"),
             Output("globe-select", "value"),
+            # Four figure outputs:
             Output("sankey-graph", "figure"),
             Output("industries-graph", "figure"),
             Output("fields-graph", "figure"),
@@ -28,116 +21,54 @@ def register_callbacks(app, df):
             State("globe-select", "value"),
         ],
     )
-    def update_figures(
+    def update_figures_callback(
         apply_clicks, reset_clicks, ir_levels, selected_countries, selected_projection
     ):
         """
         Update the figures based on the control panel values.
-
-        Args:
-            n_clicks (int): Number of times the Apply button is clicked.
-            ir_levels (list): Selected Sankey levels.
-            selected_countries (list): Selected countries for filtering.
-            selected_projection (str): Selected map projection for the choropleth.
-
-        Returns:
-            tuple: Updated Sankey and Choropleth figures.
         """
-
-        # Determine which button triggered the callback
         ctx = callback_context
         triggered_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
-        # Default values for reset
-        default_ir_levels = [
-            "1st Node",
-            "Field",
-            "StatusLevel1",
-            "StatusLevel2",
-            "StatusLevel3",
-            "StatusLevel4",
-            "StatusLevel5",
-        ]
+        # Find all status-level columns
+        status_cols = [col for col in df.columns if col.startswith("StatusLevel")]
+        # Exclude StatusLevel0
+        status_cols = [col for col in status_cols if col != "StatusLevel0"]
+
+        default_dropdown_options = ["1st Node", "Field"] + status_cols
 
         default_countries = df["Country"].unique()
         default_projection = "natural earth1"
 
-        # Use default values if reset button is clicked
+        # If the user clicked "Reset"
         if triggered_id == "reset-btn":
-            ir_levels = default_ir_levels
+            ir_levels = default_dropdown_options
             selected_countries = default_countries
             selected_projection = default_projection
 
-        # Filter data based on selected countries
+        # Filter data by selected countries
         filtered_data = df[df["Country"].isin(selected_countries)]
 
-        # Handle 1st Node position in the list and status levels order
-        modified_ir_levels = reorder_and_place_status_levels(ir_levels)
-
-        # Create Irene-Sankey Diagram
-        irene_sankey_figure = create_irene_sankey(
-            data=filtered_data,
-            levels=modified_ir_levels,
-            title="Irene-Sankey Diagram",
-            color_template="plotly",
-            font_color="#000000",
-        )
-
-        # Treemap: Top Industries
-        top_industries = (
-            filtered_data["Industry"].value_counts().reset_index(name="count")
-        )
-        industries_figure = create_treemap(
-            top_industries,
-            path=["Industry"],
-            values="count",
-            title="Top Industries",
-            color="count",
+        # Generate the four figures with the same function used at initial load
+        industries_fig, fields_fig, choropleth_fig, sankey_fig = generate_figures(
+            df=filtered_data,
+            sankey_levels=ir_levels,
+            map_projection=selected_projection,
             color_template="none",
             font_color="#14213d",
         )
 
-        # Bar Chart: Top Fields
-        top_fields = (
-            filtered_data["Field"].value_counts().head(10).reset_index(name="count")
-        )
-        total_count = top_fields["count"].sum()
-        top_fields["percentage_and_count"] = (top_fields["count"] / total_count).apply(
-            lambda x: f"{x:.2f}%"
-        ) + top_fields["count"].apply(lambda x: f" ({x})")
-
-        fields_figures = create_bar_chart(
-            data=top_fields,
-            x="count",
-            y="Field",
-            orientation="h",
-            color="count",
-            text="percentage_and_count",
-            title="Top Fields",
-            labels={"count": "", "Field": "", "percentage": "Percentage"},
-            color_scale="Viridis",
-            color_template="none",
-            font_color="#14213d",
-        )
-
-        # Create Choropleth Map
-        choropleth_figure = create_choropleth(
-            data=filtered_data,
-            locations="Country",
-            hover_name="Country",
-            title="Top Countries of Job Locations",
-            projection=selected_projection,
-            color_scale="Viridis",
-            color_template="none",
-            font_color="#14213d",
-        )
-
+        # Return them in the order that matches the Output list
+        # sankey-graph => sankey_fig
+        # industries-graph => industries_fig
+        # fields-graph => fields_fig
+        # choropleth-graph => choropleth_fig
         return (
             ir_levels,
             selected_countries,
             selected_projection,
-            irene_sankey_figure,
-            industries_figure,
-            fields_figures,
-            choropleth_figure,
+            sankey_fig,
+            industries_fig,
+            fields_fig,
+            choropleth_fig,
         )
