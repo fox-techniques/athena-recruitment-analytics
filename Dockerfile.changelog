@@ -1,0 +1,14 @@
+# Use a minimal Ruby image for github-changelog-generator
+FROM ruby:3.2
+
+# Install github-changelog-generator
+RUN gem install github_changelog_generator
+
+# Set working directory
+WORKDIR /app
+
+# Set environment variable for GitHub token (will be passed at runtime)
+ENV GITHUB_TOKEN=""
+
+# Default command to generate the changelog
+ENTRYPOINT ["github_changelog_generator"]

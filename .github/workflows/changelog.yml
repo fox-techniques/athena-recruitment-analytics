@@ -1,0 +1,45 @@
+name: Update Changelog
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"          
+      - "v[0-9]+.[0-9]+.[0-9]+-alpha.[0-9]+" 
+      - "v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+"  
+      - "v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+"
+  
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Changelog Docker Image
+        run: docker build -t changelog-generator -f Dockerfile.changelog .
+
+      - name: Generate Changelog
+        run: |
+          docker run --rm \
+            -e GITHUB_TOKEN=${{ secrets.CHANGELOG_TOKEN }} \
+            -v ${{ github.workspace }}:/app \
+            changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }}
+
+      - name: Debug Git Changes
+        run: |
+          git status
+          git diff --staged
+
+      - name: Commit & Push Changelog
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add CHANGELOG.md
+          git diff --cached --quiet || git commit -m "Update changelog for ${{ github.ref_name }}"
+          git push
+          
