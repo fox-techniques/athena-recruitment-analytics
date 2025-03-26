@@ -74,6 +74,6 @@ Open your web browser and navigate to:
 http://127.0.0.1:8050/
 ```
 
-Thank you for exploring our demo! We hope this example has given you a clear understanding of how to utilize our dashboard and integrate its features into your projects. Whether you're just getting started or diving deeper, our goal is to make your experience as seamless and productive as possible.
+Thanks for checking out our demo! We hope this helped you get started with **ATHENA**. Whether you're just trying it out or customizing it for your workflow, we’re excited to support your journey.
 
-Happy coding!
+Happy tracking! 💼📊

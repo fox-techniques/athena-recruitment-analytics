@@ -1,4 +1,4 @@
-site_name: ATHENA - Application Tracking & Recruitment Analytics
+site_name: ATHENA Recruitment Analytics
 theme: 
   features:
     - navigation.footer
@@ -32,6 +32,8 @@ theme:
 
 nav:
   - Home: index.md
+  - Prerequisites: prerequisites.md
+  - Configuration: configuration.md
   - Instructions: instructions.md
   - Demo: demo.md
   - Support: SUPPORT.md

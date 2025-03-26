@@ -2,29 +2,8 @@
 
 Follow these steps to clone the repository, set up the environment, and run the **ATHENA** dashboard.
 
-**Prerequisites:**
 
-- 🐍 Python 3.10+
-
-Ensure you have **Python 3.10+** installed. If not, download and install it from the [official Python website](https://www.python.org/downloads/). Check your version:
-
-```bash
-python --version
-```
-For installation guides and troubleshooting, refer to the [RealPython](https://realpython.com/installing-python/) documentation.
-
-!!! tip
-
-    If you don't have prior experience with Python, we recommend reading
-    [Using Python's pip to Manage Your Projects' Dependencies], which is a
-    really good introduction on the mechanics of Python package management and
-    helps you troubleshoot if you run into errors.
-
-  [virtual environment]: https://realpython.com/what-is-pip/#using-pip-in-a-python-virtual-environment
-  [Using Python's pip to Manage Your Projects' Dependencies]: https://realpython.com/what-is-pip/
-
-## 🐙 Git
-
+## 💻 ATHENA Dashboard (Local)
 
 **Step 1.** Open your terminal or command prompt.
 
@@ -39,8 +18,6 @@ git clone https://github.com/your-repo/athena-recruitment-analytics.git
 ```bash
 cd athena-recruitment-analytics
 ```
-
-## 📦 Package manager
 
 === "pip"
 
@@ -71,7 +48,7 @@ cd athena-recruitment-analytics
     pip install --upgrade pip
     ```
 
-    ## Install Dependencies
+    Install Dependencies
 
     **Step 7.** Install the required Python packages using requirements.txt:
 
@@ -100,7 +77,7 @@ cd athena-recruitment-analytics
     poetry shell
     ```
 
-    ## Update Dependencies
+    Update Dependencies
 
     **Step 7.** Add, remove, or update packages:
 
@@ -122,4 +99,60 @@ Open your web browser and navigate to:
 
 ```bash
 http://127.0.0.1:8050/
+
 ```
+
+---
+
+## 🐳 Docker
+
+You can also run the dashboard using the pre-built Docker image.
+
+### Using Docker CLI
+
+```sh
+docker run -p 8050:8050 \
+  -e DASH_HOST=0.0.0.0 \
+  -e DASH_PORT=8050 \
+  ghcr.io/fox-techniques/athena-dash-app:latest
+
+```
+
+Then open your browser and go to:
+
+```sh
+http://localhost:8050/
+
+```
+
+### Using Docker Compose
+
+Add this to your `docker-compose.yml`:
+
+```yml
+services:
+  athena:
+    image: ghcr.io/fox-techniques/athena-dash-app:latest
+    environment:
+      - DASH_HOST=0.0.0.0
+      - DASH_PORT=8050
+    ports:
+      - "8050:8050"
+```
+
+Then start the service:
+
+```sh
+docker-compose up -d
+```
+
+Navigate to:
+
+```sh
+http://localhost:8050/
+
+```
+
+---
+
+🤩 CONGRAGULATIONS! Continue to the demo. Let's keep going...🚀
